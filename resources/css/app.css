@@ -1,0 +1,102 @@
+:root {
+  --bg-color: #218c74;
+  --sec-bg-color: #fa8231;
+  --text-color: #fff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none !important;
+}
+
+body {
+  background-color: #f1f2f6;
+}
+
+.mainContainer {
+  margin-top: 4rem;
+}
+
+.bgColor {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+}
+
+.bgColor a {
+  color: var(--text-color);
+  transition: color 0.4s ease, font-weight 0.4s ease;
+}
+
+.bgColor a:hover {
+  color: var(--sec-bg-color);
+  /* text-decoration: underline; */
+}
+
+.bgColor a:active {
+  color: var(--text-color);
+}
+
+.secBgColor {
+  background-color: var(--sec-bg-color) !important;
+  color: var(--text-color) !important;
+  transition: color 0.4s ease, font-weight 0.4s ease;
+}
+
+button.secBgColor:hover {
+  color: var(--bg-color) !important;
+  /* text-decoration: underline; */
+}
+
+.textColor {
+  color: var(--text-color);
+}
+
+.itemSubMenu {
+  background-color: var(--sec-bg-color);
+  transition: background-color 0.4s ease !important;
+}
+
+.itemSubMenu:hover {
+  background-color: var(--bg-color) !important;
+}
+
+.icono {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.iconoNav {
+  margin-right: 0.5rem;
+}
+
+.tituloNav {
+  font-size: 1.5rem;
+}
+
+.itemNav a {
+  font-size: 1.2rem;
+  color: var(--text-color) !important;
+  transition: color 0.4s ease;
+}
+
+.itemNav > a:hover {
+  color: var(--sec-bg-color) !important;
+}
+
+.dropdown-menu-hover {
+  display: none; /* Inicialmente, ocultar la lista desplegable */
+  position: absolute;
+  background-color: #fff; /* Establece el color de fondo deseado */
+}
+
+/* Mostrar la lista desplegable al hacer hover en el enlace padre */
+.itemNav:hover .dropdown-menu-hover {
+  display: block;
+}
+
+/* Opcional: Añadir estilos para los elementos de la lista desplegable */
+.itemSubMenu:hover {
+  background-color: #ccc; /* Cambia el color de fondo al hacer hover */
+}

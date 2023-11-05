@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre', 100);
             $table->text('descripcion');
+            $table->integer('id_congreso')->nullable()->foreign('id_congreso')->references('id')->on('congresos');
             $table->integer('id_usuario')->foreign('id_usuario')->references('id')->on('usuarios');
             $table->timestamps();
         });

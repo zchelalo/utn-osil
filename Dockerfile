@@ -23,8 +23,8 @@ ENV PORT=8000
 ENTRYPOINT [ "docker/entrypoint.sh" ]
 
 # ==============================================================================
-# Node.js
-FROM node:14-alpine as node
+#  node
+FROM node:18.3-alpine as node
 
 WORKDIR /var/www
 COPY . .
@@ -33,3 +33,5 @@ RUN npm install --global cross-env
 RUN npm install
 
 VOLUME /var/www/node_modules
+
+CMD [ "npm", "run", "dev" "--" "--host=0.0.0.0" ] 

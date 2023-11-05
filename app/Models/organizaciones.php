@@ -13,4 +13,8 @@ class organizaciones extends Model
         'nombre',
         'direccion',
     ];
+
+    protected $casts = [
+        'direccion' => 'array', // Convierte la columna 'direccion' en un arreglo asociativo
+    ];
 }

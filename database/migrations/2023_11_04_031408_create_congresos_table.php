@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('congresos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 100)->unique();
+            $table->string('nombre', 255)->unique();
+            $table->text('descripcion');
+            $table->string('img')->nullable();
             $table->integer('id_organizacion')->foreign('id_organizacion')->references('id')->on('organizaciones');
             $table->timestamps();
         });

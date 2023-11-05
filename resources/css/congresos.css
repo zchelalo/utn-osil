@@ -1,0 +1,33 @@
+.contenedorCard {
+  transition: transform 0.2s; /* Agrega una transición suave de 0.2 segundos */
+  cursor: pointer;
+}
+
+.contenedorCard:hover {
+  transform: scale(1.05); /* Aumenta el tamaño al 105% cuando se pasa el mouse por encima */
+}
+
+.contenedorCard {
+  border: none;
+}
+
+.contenedorInfoCard {
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.contenedorInfoCongresos {
+  z-index: 100;
+}
+
+.contenedorImgCongresos{
+  position: relative;
+}
+
+.imgCongresos {
+  height: 100%;
+  width: auto !important;
+  max-width: none !important;
+  overflow: hidden;
+  position: absolute;
+}

@@ -11,6 +11,13 @@ class congresos extends Model
 
     protected $fillable = [
         'nombre',
+        'descripcion',
+        'img',
         'id_organizacion',
     ];
+
+    public function organizaciones()
+    {
+        return $this->belongsTo(organizaciones::class, 'id_organizacion');
+    }
 }
