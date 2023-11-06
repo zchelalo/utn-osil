@@ -3,19 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\talleres;
-use DateTime;
-use Carbon\Carbon;
 
-class TalleresController extends Controller
+class PresentacionesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $talleres = talleres::with('congresos')->get();
-        return view('talleres.index', ['talleres' => $talleres]);
+        //
     }
 
     /**

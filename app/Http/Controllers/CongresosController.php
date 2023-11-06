@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\congresos;
 use App\Models\fechas;
-use DateTime;
+use App\Models\presentaciones;
+use App\Models\tipo_presentacion;
 use Carbon\Carbon;
 
 class CongresosController extends Controller
@@ -51,37 +52,43 @@ class CongresosController extends Controller
 
         $congreso = congresos::with('organizaciones')->find($id);
 
-        $fechaCongreso = fechas::whereNull('id_taller')->whereNull('id_conferencia')->get();
-        $fechasTalleres = fechas::where('id_congreso', $id)->whereNotNull('id_taller')->with('talleres')->get();
-        $fechasConferencias = fechas::where('id_congreso', $id)->whereNotNull('id_conferencia')->with('conferencias')->get();
+        $tiposPresentacion = tipo_presentacion::get();
 
-        $fechasEvento = [];
-        $fechaInicio = new DateTime($fechaCongreso[0]->dia);
-        $fechaFin = new DateTime($fechaCongreso[0]->dia_fin);
+        $presentaciones = presentaciones::where('id_congreso', $id)
+            ->with('tipo_presentacion')
+            ->get();
 
-        for ($fecha = $fechaInicio; $fecha <= $fechaFin; $fecha->modify('+1 day')) {
-            $fechaCarbon = Carbon::parse($fecha);
-            $nombreDia = $fechaCarbon->isoFormat('dddd'); // Obtiene el nombre del día en español
-            
-            $fechasEvento[] = [$fecha->format('Y-m-d'), $nombreDia, $fechaCarbon->format('d-m-Y')];
+        $datosPorTipo = [];
+
+        foreach ($presentaciones as $presentacion) {
+            $tipoPresentacion = $presentacion->tipo_presentacion;
+            $nombreTipo = $tipoPresentacion->nombre; // Nombre del tipo de presentación
+
+            if (!isset($datosPorTipo[$nombreTipo])) {
+                $datosPorTipo[$nombreTipo] = [];
+            }
+
+            $datosPorTipo[$nombreTipo][] = $presentacion;
         }
+        // dd($datosPorTipo);
 
-        foreach ($fechasTalleres as $key => $value) {
-            $value->inicio = Carbon::parse($value->inicio)->isoFormat('HH:mm');
-            $value->fin = Carbon::parse($value->fin)->isoFormat('HH:mm');
-        }
+        $fechaInicio = fechas::where('id_congreso', $id)
+            ->orderBy('dia', 'asc')
+            ->orderBy('inicio', 'asc')
+            ->first('dia');
 
-        foreach ($fechasConferencias as $key => $value) {
-            $value->inicio = Carbon::parse($value->inicio)->isoFormat('HH:mm');
-            $value->fin = Carbon::parse($value->fin)->isoFormat('HH:mm');
-        }
+        $fechaFin = fechas::where('id_congreso', $id)
+            ->orderBy('dia', 'desc')
+            ->orderBy('fin', 'desc')
+            ->first('dia');
+
+        $fechaCongreso = Carbon::parse($fechaInicio->dia)->format('d-m-Y') . ' - ' . Carbon::parse($fechaFin->dia)->format('d-m-Y');
 
         return view('congresos.show', [
-            'congreso' => $congreso, 
-            'fechasEvento' => $fechasEvento, 
-            'fechaCongreso' => $fechaCongreso, 
-            'fechasTalleres' => $fechasTalleres, 
-            'fechasConferencias' => $fechasConferencias
+            'congreso' => $congreso,
+            'fechaCongreso' => $fechaCongreso,
+            'tiposPresentacion' => $tiposPresentacion,
+            'datosPorTipo' => $datosPorTipo
         ]);
     }
 

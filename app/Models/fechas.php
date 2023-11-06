@@ -11,11 +11,9 @@ class fechas extends Model
 
     protected $fillable = [
         'dia',
-        'dia_fin',
         'inicio',
         'fin',
-        'id_taller',
-        'id_conferencia',
+        'id_presentacion',
         'id_congreso',
     ];
 
@@ -24,13 +22,8 @@ class fechas extends Model
         return $this->belongsTo(congresos::class, 'id_congreso');
     }
 
-    public function talleres()
+    public function presentaciones()
     {
-        return $this->belongsTo(talleres::class, 'id_taller');
-    }
-
-    public function conferencias()
-    {
-        return $this->belongsTo(conferencias::class, 'id_conferencia');
+        return $this->belongsTo(presentaciones::class, 'id_presentacion');
     }
 }

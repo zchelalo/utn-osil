@@ -10,6 +10,6 @@ class tipo_usuario extends Model
     use HasFactory;
 
     protected $fillable = [
-        'descripcion',
+        'nombre',
     ];
 }

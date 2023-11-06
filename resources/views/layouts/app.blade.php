@@ -52,12 +52,7 @@
 
               <li class="nav-item itemNav row d-flex justify-content-center align-items-center mb-2">
                 <i class="fa-solid fa-graduation-cap iconoNav col-md-2 pl-2 m-0"></i>
-                <a class="nav-link col-md-10 p-0 m-0 linkRutas {{ request()->routeIs('talleres') ? 'active' : '' }}" href="{{ route('talleres') }}">Talleres</a>
-              </li>
-
-              <li class="nav-item itemNav row d-flex justify-content-center align-items-center mb-2">
-                <i class="fa-solid fa-message iconoNav col-md-2 pl-2 m-0"></i>
-                <a class="nav-link col-md-10 p-0 m-0  linkRutas{{ request()->routeIs('inicio') ? 'active' : '' }}" href="{{ route('inicio') }}">Conferencias</a>
+                <a class="nav-link col-md-10 p-0 m-0 linkRutas {{ request()->routeIs('presentaciones') ? 'active' : '' }}" href="{{ route('presentaciones') }}">Presentaciones</a>
               </li>
 
             </ul>

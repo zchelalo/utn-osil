@@ -16,10 +16,9 @@ class tipo_usuario_seeder extends Seeder
         // Verificar si ya existen registros en la tabla 'tipo_usuarios'
         if (DB::table('tipo_usuarios')->count() === 0) {
             DB::table('tipo_usuarios')->insert([
-                ['descripcion' => 'Invitado'],
-                ['descripcion' => 'Tallerista'],
-                ['descripcion' => 'Conferencista'],
-                ['descripcion' => 'Administrador'],
+                ['nombre' => 'Invitado'],
+                ['nombre' => 'Presentador'],
+                ['nombre' => 'Administrador'],
             ]);
         }
     }

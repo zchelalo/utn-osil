@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CongresosController;
-use App\Http\Controllers\TalleresController;
+use App\Http\Controllers\PresentacionesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +21,5 @@ Route::get('/', [WelcomeController::class, 'index'])->name('inicio');
 Route::get('/congresos', [CongresosController::class, 'index'])->name('congresos');
 Route::get('/congresos/{id}', [CongresosController::class, 'show'])->name('congresos.show');
 
-Route::get('/talleres', [TalleresController::class, 'index'])->name('talleres');
+Route::get('/presentaciones', [PresentacionesController::class, 'index'])->name('presentaciones');
+Route::get('/presentaciones/{id}', [PresentacionesController::class, 'show'])->name('presentaciones.show');

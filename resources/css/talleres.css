@@ -23,8 +23,17 @@
 }
 
 @media (max-width: 768px) {
+  .bodyCardTalleres {
+    display: block;
+  }
+
   .contenedorInfoTalleres {
     width: 100%;
+  }
+
+  .contenedorInfoTalleres > a {
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
 
   .contenedorImgTalleres {

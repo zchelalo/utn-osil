@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('conferencias', function (Blueprint $table) {
+        Schema::create('tipo_presentaciones', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 100);
-            $table->text('descripcion');
-            $table->integer('id_congreso')->nullable()->foreign('id_congreso')->references('id')->on('congresos');
-            $table->integer('id_usuario')->foreign('id_usuario')->references('id')->on('usuarios');
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('conferencias');
+        Schema::dropIfExists('tipo_presentaciones');
     }
 };

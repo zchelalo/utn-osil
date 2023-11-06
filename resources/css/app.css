@@ -100,3 +100,13 @@ button.secBgColor:hover {
 .itemSubMenu:hover {
   background-color: #ccc; /* Cambia el color de fondo al hacer hover */
 }
+
+@media (max-width: 768px) {
+  .iconoNav {
+    width: 17% !important;
+  }
+
+  .linkRutas {
+    width: 83% !important;
+  }
+}
