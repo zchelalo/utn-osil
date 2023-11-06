@@ -29,8 +29,8 @@ FROM node:18.3-alpine as node
 WORKDIR /var/www
 COPY . .
 
-RUN npm install --global cross-env
-RUN npm install
+RUN npm install --force --global cross-env
+RUN npm install --force
 
 VOLUME /var/www/node_modules
 

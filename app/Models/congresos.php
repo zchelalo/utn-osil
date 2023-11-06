@@ -16,6 +16,10 @@ class congresos extends Model
         'id_organizacion',
     ];
 
+    protected $casts = [
+        'img' => 'array', // Convierte la columna 'direccion' en un arreglo asociativo
+    ];
+
     public function organizaciones()
     {
         return $this->belongsTo(organizaciones::class, 'id_organizacion');

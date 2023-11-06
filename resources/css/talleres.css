@@ -1,0 +1,33 @@
+.imgTalleres {
+  border-radius: 10px;
+  transition: transform 0.2s; /* Agrega una transición suave de 0.2 segundos */
+  cursor: pointer;
+}
+
+.imgTalleres:hover {
+  transform: scale(1.05); /* Aumenta el tamaño al 105% cuando se pasa el mouse por encima */
+}
+
+.btnTalleres {
+  width: auto;
+}
+
+@media (max-width: 992px) {
+  .contenedorInfoTalleres {
+    width: 66%;
+  }
+
+  .contenedorImgTalleres {
+    width: 33%;
+  }
+}
+
+@media (max-width: 768px) {
+  .contenedorInfoTalleres {
+    width: 100%;
+  }
+
+  .contenedorImgTalleres {
+    width: 100%;
+  }
+}

@@ -7,14 +7,17 @@
   <meta name="description" content="@yield('meta-description', 'UTN Osil, laboratorio de software libre')">
   <title>@yield('title')</title>
 
+  @viteReactRefresh
   @vite([
     "resources/js/app.js",
     "resources/css/app.css",
     
-    "resources/js/librerias/popper.js",
-    "resources/js/librerias/bootstrap.js",
+    // 'resources/sass/app.scss',
 
-    "resources/css/librerias/bootstrap.css"
+    "resources/js/librerias/popper.js",
+    
+    'resources/js/librerias/bootstrap.js',
+    'resources/css/librerias/bootstrap.css'
   ])
 
   @yield('recursos')
@@ -23,6 +26,7 @@
 
 </head>
 <body>
+  {{-- <div id="root"></div> --}}
   <header>
     <nav class="navbar fixed-top bgColor">
       <div class="container-fluid">
@@ -36,21 +40,24 @@
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
 
-              <li class="nav-item itemNav">
-                <a class="nav-link {{ request()->routeIs('inicio') ? 'active' : '' }}" href="{{ route('inicio') }}"><i class="fa-solid fa-house iconoNav"></i> Inicio</a>
+              <li class="nav-item itemNav row d-flex justify-content-center align-items-center mb-2">
+                <i class="fa-solid fa-house iconoNav col-md-2 pl-2 m-0"></i>
+                <a class="nav-link col-md-10 p-0 m-0 linkRutas {{ request()->routeIs('inicio') ? 'active' : '' }}" href="{{ route('inicio') }}">Inicio</a>
               </li>
 
-              <li class="nav-item itemNav dropdown">
-                <a class="nav-link dropdown-toggle {{ request()->routeIs('congresos') ? 'active' : '' }}" href="{{ route('congresos') }}" role="button">
-                  <i class="fa-regular fa-calendar-days iconoNav"></i> Congresos
-                </a>
-                <ul class="dropdown-menu secBgColor dropdown-menu-hover">
-                  <li><a class="dropdown-item itemSubMenu" href="#">Conferencias</a></li>
-                  <li><a class="dropdown-item itemSubMenu" href="#">Talleres</a></li>
-                  {{-- <li>
-                    <hr class="dropdown-divider">
-                  </li> --}}
-                </ul>
+              <li class="nav-item itemNav row d-flex justify-content-center align-items-center mb-2">
+                <i class="fa-regular fa-calendar-days iconoNav col-md-2 pl-2 m-0"></i>
+                <a class="nav-link col-md-10 p-0 m-0 linkRutas {{ request()->routeIs('congresos') ? 'active' : '' }}" href="{{ route('congresos') }}">Congresos</a>
+              </li>
+
+              <li class="nav-item itemNav row d-flex justify-content-center align-items-center mb-2">
+                <i class="fa-solid fa-graduation-cap iconoNav col-md-2 pl-2 m-0"></i>
+                <a class="nav-link col-md-10 p-0 m-0 linkRutas {{ request()->routeIs('talleres') ? 'active' : '' }}" href="{{ route('talleres') }}">Talleres</a>
+              </li>
+
+              <li class="nav-item itemNav row d-flex justify-content-center align-items-center mb-2">
+                <i class="fa-solid fa-message iconoNav col-md-2 pl-2 m-0"></i>
+                <a class="nav-link col-md-10 p-0 m-0  linkRutas{{ request()->routeIs('inicio') ? 'active' : '' }}" href="{{ route('inicio') }}">Conferencias</a>
               </li>
 
             </ul>

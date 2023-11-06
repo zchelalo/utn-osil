@@ -13,9 +13,10 @@ return new class extends Migration
 	{
 		Schema::create('usuarios', function (Blueprint $table) {
 			$table->id();
+			$table->string('nombre', 255);
 			$table->integer('matricula')->nullable()->unsigned()->unique();
-			$table->string('correo')->unique();
-			$table->string('password');
+			$table->string('correo', 255)->unique();
+			$table->string('password', 255);
 			$table->integer('id_tipo_usuario')->foreign('id_tipo_usuario')->references('id')->on('tipo_usuario');
 			$table->timestamps();
 		});

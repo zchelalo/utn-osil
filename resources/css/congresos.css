@@ -31,3 +31,26 @@
   overflow: hidden;
   position: absolute;
 }
+
+.swiper {
+  width: 100%;
+  height: auto;
+}
+
+.sectionFechas > section > div {
+  border-radius: 10px;
+}
+
+.articulos {
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .iconoNav {
+    width: 17%;
+  }
+
+  .linkRutas {
+    width: 83%;
+  }
+}

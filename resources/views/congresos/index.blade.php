@@ -18,7 +18,7 @@
     <a href="{{ route('congresos.show', $value->id) }}" class="card mb-3 w-100 contenedorCard">
       <div class="row g-0 contenedorInfoCard">
         <div class="col-md-3 contenedorImgCongresos d-flex justify-content-center align-items-center">
-          <img src="{{ $value->img != null ? $value->img : asset('storage/img/img-por-defecto-congresos.jpg') }}" class="imgCongresos img-fluid rounded-start" alt="...">
+          <img src="{{ isset($value->img[0]) != null ? $value->img[0] : asset('storage/img/img-por-defecto-congresos.jpg') }}" class="imgCongresos img-fluid rounded-start" alt="...">
         </div>
         <div class="col-md-9 contenedorInfoCongresos bgColor">
           <div class="card-body">

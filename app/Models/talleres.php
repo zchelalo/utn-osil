@@ -12,6 +12,17 @@ class talleres extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'id_congreso',
         'id_usuario',
     ];
+
+    public function congresos()
+    {
+        return $this->belongsTo(congresos::class, 'id_congreso');
+    }
+
+    public function usuarios()
+    {
+        return $this->belongsTo(usuarios::class, 'id_usuario');
+    }
 }

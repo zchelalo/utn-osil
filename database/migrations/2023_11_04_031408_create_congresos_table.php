@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre', 255)->unique();
             $table->text('descripcion');
-            $table->string('img')->nullable();
+            $table->json('img')->nullable();
             $table->integer('id_organizacion')->foreign('id_organizacion')->references('id')->on('organizaciones');
             $table->timestamps();
         });

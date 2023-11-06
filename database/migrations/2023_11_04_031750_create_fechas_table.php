@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('fechas', function (Blueprint $table) {
             $table->id();
             $table->date('dia');
+            $table->date('dia_fin')->nullable();
             $table->time('inicio');
             $table->time('fin');
             $table->integer('id_taller')->nullable()->foreign('id_taller')->references('id')->on('talleres');
