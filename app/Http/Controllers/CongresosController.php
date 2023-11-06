@@ -58,6 +58,13 @@ class CongresosController extends Controller
             ->with('tipo_presentacion')
             ->get();
 
+        if (!isset($presentaciones[0]))
+        {
+            return view('congresos.show', [
+                'congreso' => $congreso
+            ]);
+        }
+
         $datosPorTipo = [];
 
         foreach ($presentaciones as $presentacion) {

@@ -33,8 +33,7 @@
   </section>
 @endif
   <section class="col-md-4 mt-3">
-
-    <h2 class="mb-3">Talleres populares</h2>
+    <h2 class="mb-3">Presentaciones populares</h2>
 
     <div class="mb-2 card"">
       <div class="card-body">
@@ -57,33 +56,7 @@
         <a href="#" class="btn btn-primary">Go somewhere</a>
       </div>
     </div>
-
-    <hr>
-
-    <h2 class="mb-3">Conferencias populares</h2>
-
-    <div class="mb-2 card">
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-    </div>
-    <div class="mb-2 card">
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-    </div>
-    <div class="mb-2 card">
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-    </div>
-
+    
   </section>
 
 </div>

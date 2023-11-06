@@ -64,6 +64,16 @@
   <main class="container mainContainer">
     @yield('body')
   </main>
-  {{-- <footer></footer> --}}
+  <footer class="footer container-fluid bgColor mt-4">
+    <div class="container">
+        <div class="row pb-3 pt-3">
+            {{-- <h2>FOOTER!</h2> --}}
+            
+            <span>
+                © UTN
+            </span>
+        </div>
+    </div>
+  </footer>
 </body>
 </html>

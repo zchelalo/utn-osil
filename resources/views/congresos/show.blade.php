@@ -22,13 +22,16 @@
       <p>
         {{ $congreso->descripcion }}
       </p>
-      <span>Duración: {{ $fechaCongreso }}</span>
+      @if(isset($fechaCongreso))
+        <span>Duración: {{ $fechaCongreso }}</span><br>
+      @endif
+      <span>Horario: <a href="#">Descargar</a></span>
     </article>
     <div class="col-md-8">@include('partials.slider-congresos')</div>
   </section>
 
 
-  @if(count($datosPorTipo) > 0)
+  @if(isset($datosPorTipo) && count($datosPorTipo) > 0)
 
     @php
       $contador = 0;
@@ -48,7 +51,7 @@
             <div id="flush-collapse{{ $contador }}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
               @foreach($datosPorTipo[$tipoPresentacion->nombre] as $info)
                 <article class="accordion-body row">
-                  <img class="img-fluid col-md-4" src="{{ $info->img != null ? $info->img : asset('storage/img/img-por-defecto-congresos.jpg') }}" alt="{{ $info->nombre }}">
+                  <img class="imgPresentacionesCongresos img-fluid col-md-4" src="{{ $info->img != null ? $info->img : asset('storage/img/img-por-defecto-congresos.jpg') }}" alt="{{ $info->nombre }}">
                   <div class="col-md-8">
                     <h3>{{ $info->nombre }}</h3>
                     <p>
