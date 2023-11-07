@@ -28,7 +28,7 @@
 
 </head>
 <body>
-  <div id="root"></div>
+  {{-- <div id="root"></div> --}}
   <header>
     <nav class="navbar fixed-top bgColor">
       <div class="container-fluid">

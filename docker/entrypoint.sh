@@ -18,6 +18,7 @@ if [ "$role" = "app" ]; then
     php artisan cache:clear
     php artisan config:clear
     php artisan route:clear
+    php artisan storage:link
     php artisan migrate
     php artisan db:seed --class=tipo_usuario_seeder
     php artisan db:seed --class=tipo_presentacion_seeder

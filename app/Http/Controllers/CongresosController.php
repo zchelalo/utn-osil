@@ -17,8 +17,16 @@ class CongresosController extends Controller
     public function index()
     {
         $congresos = congresos::get();
-        // $presentaciones = fechas::where('activo', 1)->get();
-        $presentaciones = fechas::with('presentaciones')->where('activo', 1)->get();
+
+        $presentaciones = presentaciones::whereIn('id', function ($query) {
+            $query->select('id_presentacion')
+                ->from('fechas')
+                ->where('activo', 1)
+                ->distinct();
+            })
+            ->orderBy('numero_vistas', 'desc')
+            ->get();
+            
         return view('congresos.index', ['congresos' => $congresos, 'presentaciones' => $presentaciones]);
     }
 
