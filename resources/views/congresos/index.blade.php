@@ -32,32 +32,23 @@
     @endforeach
   </section>
 @endif
+
+@if(isset($presentaciones[0]))
   <section class="col-md-4 mt-3">
     <h2 class="mb-3">Presentaciones populares</h2>
 
+    @foreach($presentaciones as $presentacion)
     <div class="mb-2 card"">
       <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
+        <h5 class="card-title">{{ $presentacion->nombre }}</h5>
         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
         <a href="#" class="btn btn-primary">Go somewhere</a>
       </div>
     </div>
-    <div class="mb-2 card">
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-    </div>
-    <div class="mb-2 card">
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-    </div>
+    @endforeach
     
   </section>
+@endif
 
 </div>
 

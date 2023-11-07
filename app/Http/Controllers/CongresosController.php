@@ -17,8 +17,8 @@ class CongresosController extends Controller
     public function index()
     {
         $congresos = congresos::get();
-        // $congresos = congresos::with('organizaciones')->get();
-        return view('congresos.index', ['congresos' => $congresos]);
+        $presentaciones = presentaciones::orderBy('numero_vistas', 'desc')->get();
+        return view('congresos.index', ['congresos' => $congresos, 'presentaciones' => $presentaciones]);
     }
 
     public function indexAdmin()

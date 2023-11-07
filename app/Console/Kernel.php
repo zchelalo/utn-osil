@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('deshabilitar_fechas')->hourly(); // Programa la ejecución diaria de tu comando
     }
 
     /**
@@ -21,6 +21,10 @@ class Kernel extends ConsoleKernel
     protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
+
+        // $this->commands([
+        //     \App\Console\Commands\deshabilitar_fechas::class,
+        // ]);
 
         require base_path('routes/console.php');
     }
