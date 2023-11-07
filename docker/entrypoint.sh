@@ -21,7 +21,7 @@ if [ "$role" = "app" ]; then
     php artisan migrate
     php artisan db:seed --class=tipo_usuario_seeder
     php artisan db:seed --class=tipo_presentacion_seeder
-    php artisan schedule:run
+    # php artisan schedule:work
     php artisan serve --port=$PORT --host=0.0.0.0 --env=.env
     exec docker-php-entrypoint "$@"
 fi

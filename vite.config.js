@@ -13,6 +13,8 @@ export default defineConfig({
                 "resources/css/form.css",
                 "resources/css/talleres.css",
 
+                'resources/js/index.jsx',
+
                 'resources/js/app.js',
                 "resources/js/congresos.js",
                 "resources/js/form.js",

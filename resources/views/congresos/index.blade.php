@@ -40,8 +40,8 @@
     @foreach($presentaciones as $presentacion)
     <div class="mb-2 card"">
       <div class="card-body">
-        <h5 class="card-title">{{ $presentacion->nombre }}</h5>
-        <p class="card-text">{{ $presentacion->descripcion }}</p>
+        <h5 class="card-title">{{ $presentacion->presentaciones->nombre }}</h5>
+        <p class="card-text">{{ $presentacion->presentaciones->descripcion }}</p>
         <a href="#" class="btn btn-primary">Go somewhere</a>
       </div>
     </div>
