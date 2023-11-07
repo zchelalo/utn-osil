@@ -34,4 +34,8 @@ RUN npm install --force
 
 VOLUME /var/www/node_modules
 
-CMD [ "npm", "run", "dev" "--" "--host=0.0.0.0" ] 
+# Cambiar el usuario a uno con permisos adecuados
+USER root
+
+# Ejecutar comandos que requieran permisos de escritura
+CMD [ "npm", "run", "dev", "--", "--host=0.0.0.0" ] 
