@@ -37,5 +37,7 @@ VOLUME /var/www/node_modules
 # Cambiar el usuario a uno con permisos adecuados
 USER root
 
+RUN npm run build
+
 # Ejecutar comandos que requieran permisos de escritura
 CMD [ "npm", "run", "dev", "--", "--host=0.0.0.0" ] 
