@@ -16,20 +16,22 @@ class CongresosController extends Controller
      */
     public function index()
     {
-        // $congresos = congresos::get();
+        $congresos = congresos::where('activo', 1)->get();
 
-        $congresos = congresos::whereIn('id', function ($query) {
-            $query->select('id_congreso')
-                ->from('presentaciones')
-                ->whereIn('id', function ($query) {
-                    $query->select('id_presentacion')
-                        ->from('fechas')
-                        ->where('activo', 1)
-                        ->distinct();
-                })
-                ->orderBy('numero_vistas', 'desc');
-            })
-            ->get();
+        foreach ($congresos as $congreso) {
+            $fechaInicio = fechas::where('id_congreso', $congreso->id)
+                ->orderBy('dia', 'asc')
+                ->orderBy('inicio', 'asc')
+                ->first('dia');
+
+            $fechaFin = fechas::where('id_congreso', $congreso->id)
+                ->orderBy('dia', 'desc')
+                ->orderBy('fin', 'desc')
+                ->first('dia');
+
+            $congreso['fecha_inicio'] = Carbon::parse($fechaInicio->dia)->format('d-m-Y');
+            $congreso['fecha_fin'] = Carbon::parse($fechaFin->dia)->format('d-m-Y');
+        }
 
         $presentaciones = presentaciones::whereIn('id', function ($query) {
             $query->select('id_presentacion')

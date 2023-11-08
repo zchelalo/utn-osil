@@ -33,6 +33,8 @@ COPY ./package*.json ./
 RUN npm install --force --global cross-env
 RUN npm install --force
 
+RUN mkdir node_modules/.vite && chmod -R 777 node_modules/.vite
+
 COPY . .
 
 VOLUME /var/www/node_modules
