@@ -27,15 +27,18 @@ ENTRYPOINT [ "docker/entrypoint.sh" ]
 FROM node:18.3-alpine as node
 
 WORKDIR /var/www
-COPY . .
+
+COPY ./package*.json ./
 
 RUN npm install --force --global cross-env
 RUN npm install --force
 
+COPY . .
+
 VOLUME /var/www/node_modules
 
 # Cambiar el usuario a uno con permisos adecuados
-USER root
+# USER root
 
 RUN npm run build
 
