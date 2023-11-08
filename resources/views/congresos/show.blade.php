@@ -22,8 +22,8 @@
       <p>
         {{ $congreso->descripcion }}
       </p>
-      @if(isset($fechaCongreso))
-        <span>Duración: {{ $fechaCongreso }}</span><br>
+      @if(isset($congreso->fecha_inicio))
+        <span>Duración: {{ $congreso->fecha_inicio }} - {{ $congreso->fecha_fin }}</span><br>
       @endif
       <span>Horario: <a href="#">Descargar</a></span>
     </article>

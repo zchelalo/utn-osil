@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\presentaciones;
+use App\Models\usuarios;
 
-class PresentacionesController extends Controller
+class UsuariosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,14 +34,9 @@ class PresentacionesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(string $id)
     {
-        $aumentar_num_vistas = presentaciones::where('id', $id)->increment('numero_vistas');
-
-        if ($aumentar_num_vistas === 0)
-        {
-            return to_route('inicio')->with('status', 'Hubo un error al entrar a presentaciones');
-        }
+        //
     }
 
     /**

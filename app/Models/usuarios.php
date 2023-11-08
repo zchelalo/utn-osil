@@ -16,6 +16,7 @@ class usuarios extends Authenticatable
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'nombre',
         'matricula',
         'correo',
         'password',

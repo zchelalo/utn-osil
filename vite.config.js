@@ -20,10 +20,12 @@ export default defineConfig({
                 "resources/js/form.js",
 
                 "resources/js/librerias/swiper.js",
+                "resources/js/librerias/sweetalert2.js",
                 "resources/js/librerias/bootstrap.js",
                 "resources/js/librerias/popper.js",
 
                 "resources/css/librerias/swiper.css",
+                "resources/css/librerias/sweetalert2.css",
                 "resources/css/librerias/bootstrap.css"
             ],
             refresh: true,

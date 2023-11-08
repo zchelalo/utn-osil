@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CongresosController;
 use App\Http\Controllers\PresentacionesController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,5 @@ Route::get('/congresos/{id}', [CongresosController::class, 'show'])->name('congr
 
 Route::get('/presentaciones', [PresentacionesController::class, 'index'])->name('presentaciones');
 Route::get('/presentaciones/{id}', [PresentacionesController::class, 'show'])->name('presentaciones.show');
+
+Route::post('/register', [AuthController::class, 'storeUsuario'])->name('auth.store-user');

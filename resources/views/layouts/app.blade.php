@@ -12,14 +12,18 @@
     "resources/js/index.jsx",
 
     "resources/js/app.js",
+    "resources/js/form.js",
     "resources/css/app.css",
+    "resources/css/form.css",
     
     // 'resources/sass/app.scss',
 
     "resources/js/librerias/popper.js",
     
     'resources/js/librerias/bootstrap.js',
-    'resources/css/librerias/bootstrap.css'
+    'resources/js/librerias/sweetalert2.js',
+    'resources/css/librerias/bootstrap.css',
+    'resources/css/librerias/sweetalert2.css'
   ])
 
   @yield('recursos')
@@ -28,7 +32,18 @@
 
 </head>
 <body>
-  <div id="root"></div>
+  @if(session('status'))
+    <script>
+        window.addEventListener('load', function () {
+          Swal.fire({
+            text: "{{ session('status') }}",
+            icon: 'info',
+            confirmButtonText: 'Cerrar'
+          });
+        }, false);
+    </script>
+  @endif
+  {{-- <div id="root"></div> --}}
   <header>
     <nav class="navbar fixed-top bgColor">
       <div class="container-fluid">
@@ -39,7 +54,8 @@
             <h5 class="offcanvas-title tituloNav" id="offcanvasNavbarLabel">UTN Osil</h5>
             <i class="fa-solid fa-xmark textColor icono" data-bs-dismiss="offcanvas" aria-label="Close"></i>
           </div>
-          <div class="offcanvas-body">
+          <div class="offcanvas-body d-flex flex-column">
+            
             <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
 
               <li class="nav-item itemNav row d-flex justify-content-center align-items-center mb-2">
@@ -58,6 +74,20 @@
               </li>
 
             </ul>
+
+            <div class="row">
+              <div class="p-2 col-md-6">
+                <button type="button" class="btn secBgColor btnLogin w-100" data-bs-toggle="modal" data-bs-target="#loginModal">
+                  Iniciar sesión
+                </button>
+              </div>
+              <div class="p-2 col-md-6">
+                <button type="button" class="btn secBgColor btnSignup w-100" data-bs-toggle="modal" data-bs-target="#registerModal">
+                  Registrarse
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -77,5 +107,6 @@
         </div>
     </div>
   </footer>
+  @include('partials.login-sign')
 </body>
 </html>

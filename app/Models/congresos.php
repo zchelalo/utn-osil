@@ -13,6 +13,8 @@ class congresos extends Model
         'nombre',
         'descripcion',
         'img',
+        'numero_vistas',
+        'activo',
         'id_organizacion',
     ];
 

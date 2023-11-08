@@ -74,6 +74,13 @@ class CongresosController extends Controller
         // Establece la configuración regional en español
         Carbon::setLocale('es');
 
+        $aumentar_num_vistas = congresos::where('id', $id)->increment('numero_vistas');
+
+        if ($aumentar_num_vistas === 0)
+        {
+            return to_route('inicio')->with('status', 'Hubo un error al entrar a congresos');
+        }
+
         $congreso = congresos::with('organizaciones')->find($id);
 
         $tiposPresentacion = tipo_presentacion::get();
@@ -113,11 +120,11 @@ class CongresosController extends Controller
             ->orderBy('fin', 'desc')
             ->first('dia');
 
-        $fechaCongreso = Carbon::parse($fechaInicio->dia)->format('d-m-Y') . ' - ' . Carbon::parse($fechaFin->dia)->format('d-m-Y');
+        $congreso['fecha_inicio'] = Carbon::parse($fechaInicio->dia)->format('d-m-Y');
+        $congreso['fecha_fin'] = Carbon::parse($fechaFin->dia)->format('d-m-Y');
 
         return view('congresos.show', [
             'congreso' => $congreso,
-            'fechaCongreso' => $fechaCongreso,
             'tiposPresentacion' => $tiposPresentacion,
             'datosPorTipo' => $datosPorTipo
         ]);

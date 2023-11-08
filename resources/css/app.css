@@ -1,6 +1,8 @@
 :root {
   --bg-color: #218c74;
+  --hover-bg-color: #1c725f;
   --sec-bg-color: #fa8231;
+  --hover-sec-bg-color: #e67225;
   --text-color: #fff;
 }
 
@@ -49,14 +51,23 @@ body {
   transition: color 0.4s ease, font-weight 0.4s ease;
 }
 
+button.bgColor:hover, a.bgColor:hover {
+  background: var(--hover-bg-color) !important;
+  /* text-decoration: underline; */
+}
+
 button.secBgColor:hover {
-  color: var(--bg-color) !important;
+  background: var(--hover-sec-bg-color) !important;
   /* text-decoration: underline; */
 }
 
 .textColor {
   color: var(--text-color);
 }
+
+/* .btnLogin {
+  width: auto;
+} */
 
 .itemSubMenu {
   background-color: var(--sec-bg-color);
