@@ -16,6 +16,9 @@ class CongresosController extends Controller
      */
     public function index()
     {
+        // Establece la configuración regional en español
+        Carbon::setLocale('es');
+        
         $congresos = congresos::where('activo', 1)->get();
 
         foreach ($congresos as $congreso) {

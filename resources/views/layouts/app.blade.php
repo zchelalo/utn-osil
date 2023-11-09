@@ -37,7 +37,8 @@
           Swal.fire({
             text: "{{ session('status') }}",
             icon: "{{ session('icon') }}",
-            confirmButtonText: 'Cerrar'
+            confirmButtonText: 'Cerrar',
+            confirmButtonColor: '#218c74'
           });
         }, false);
     </script>
@@ -116,5 +117,6 @@
     </div>
   </footer>
   @include('partials.login-sign')
+  <input type="hidden" id="urlHost" name="urlHost" value="{{ url('/')}}">
 </body>
 </html>

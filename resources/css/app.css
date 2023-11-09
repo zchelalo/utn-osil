@@ -62,7 +62,7 @@ button.secBgColor:hover {
 }
 
 .textColor {
-  color: var(--text-color);
+  color: var(--text-color) !important;
 }
 
 /* .btnLogin {

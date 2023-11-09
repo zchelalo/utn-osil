@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\presentaciones;
+use App\Models\tipo_presentacion;
+use App\Models\fechas;
+use Carbon\Carbon;
 
 class PresentacionesController extends Controller
 {
@@ -12,7 +15,74 @@ class PresentacionesController extends Controller
      */
     public function index()
     {
-        //
+        // Establece la configuración regional en español
+        Carbon::setLocale('es');
+
+        // $presentaciones = fechas::with(['presentaciones', 'congresos'])->where('activo', 1)->distinct('id_presentacion')->get();
+        $presentaciones = fechas::with(['presentaciones', 'congresos'])
+            ->join('presentaciones', 'fechas.id_presentacion', '=', 'presentaciones.id')
+            ->join('tipo_presentaciones', 'presentaciones.id_tipo_presentacion', '=', 'tipo_presentaciones.id')
+            ->where('fechas.activo', 1)
+            ->select('tipo_presentaciones.nombre as tipo_presentacion_nombre', 'fechas.*')
+            ->orderBy('dia', 'asc')
+            ->orderBy('inicio', 'asc')
+            ->get();
+
+        foreach ($presentaciones as $presentacion) {
+            $presentacion['dia'] = Carbon::parse($presentacion->dia)->format('d-m-Y');
+            $presentacion['inicio'] = Carbon::parse($presentacion->inicio)->format('H:i');
+            $presentacion['fin'] = Carbon::parse($presentacion->fin)->format('H:i');
+        }
+
+        // Ahora, agrupa los resultados por 'id_presentacion' utilizando collections
+        $presentacionesAgrupadas = $presentaciones->groupBy('id_presentacion')->all();
+
+        $tiposPresentacion = tipo_presentacion::get();
+
+        return view('presentaciones.index', ['presentaciones' => $presentacionesAgrupadas, 'tipo_presentaciones' => $tiposPresentacion]);
+    }
+
+    public function busqueda(Request $request)
+    {
+        $data = $request->validate([
+            'idTipo' => ['nullable', 'integer'],
+            'nombrePresentacion' => ['nullable', 'string']
+        ]);
+        
+        // Establece la configuración regional en español
+        Carbon::setLocale('es');
+
+        $presentaciones = fechas::with(['presentaciones', 'congresos'])
+            ->join('presentaciones', 'fechas.id_presentacion', '=', 'presentaciones.id')
+            ->join('tipo_presentaciones', 'presentaciones.id_tipo_presentacion', '=', 'tipo_presentaciones.id')
+            ->where('fechas.activo', 1);
+
+        if (isset($data['idTipo']))
+        {
+            $presentaciones->where('tipo_presentaciones.id', $data['idTipo']);
+        }
+
+        if (isset($data['nombrePresentacion']))
+        {
+            $presentaciones->whereRaw('LOWER(presentaciones.nombre) LIKE ?', ['%' . strtolower($data['nombrePresentacion']) . '%']);
+        }
+
+        $presentaciones = $presentaciones
+            ->select('tipo_presentaciones.nombre as tipo_presentacion_nombre', 'fechas.*')
+            ->orderBy('dia', 'asc')
+            ->orderBy('inicio', 'asc')
+            ->get();
+
+        foreach ($presentaciones as $presentacion) {
+            $presentacion['dia'] = Carbon::parse($presentacion->dia)->format('d-m-Y');
+            $presentacion['inicio'] = Carbon::parse($presentacion->inicio)->format('H:i');
+            $presentacion['fin'] = Carbon::parse($presentacion->fin)->format('H:i');
+        }
+
+        // Ahora, agrupa los resultados por 'id_presentacion' utilizando collections
+        $presentacionesAgrupadas = $presentaciones->groupBy('id_presentacion')->all();
+
+        return response()->json($presentacionesAgrupadas);
     }
 
     /**

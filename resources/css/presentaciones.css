@@ -1,42 +1,42 @@
-.imgTalleres {
+.imgPresentaciones {
   border-radius: 10px;
   transition: transform 0.2s; /* Agrega una transición suave de 0.2 segundos */
   cursor: pointer;
 }
 
-.imgTalleres:hover {
+.imgPresentaciones:hover {
   transform: scale(1.05); /* Aumenta el tamaño al 105% cuando se pasa el mouse por encima */
 }
 
-.btnTalleres {
+.btnPresentaciones {
   width: auto;
 }
 
 @media (max-width: 992px) {
-  .contenedorInfoTalleres {
+  .contenedorInfoPresentaciones {
     width: 66%;
   }
 
-  .contenedorImgTalleres {
+  .contenedorImgPresentaciones {
     width: 33%;
   }
 }
 
 @media (max-width: 768px) {
-  .bodyCardTalleres {
+  .bodyCardPresentaciones {
     display: block;
   }
 
-  .contenedorInfoTalleres {
+  .contenedorInfoPresentaciones {
     width: 100%;
   }
 
-  .contenedorInfoTalleres > a {
+  .contenedorInfoPresentaciones > a {
     width: 100%;
     margin-bottom: 0.5rem;
   }
 
-  .contenedorImgTalleres {
+  .contenedorImgPresentaciones {
     width: 100%;
   }
 }
