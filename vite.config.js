@@ -17,7 +17,6 @@ export default defineConfig({
 
                 'resources/js/app.js',
                 "resources/js/congresos.js",
-                "resources/js/form.js",
                 "resources/js/presentaciones.js",
 
                 "resources/js/librerias/swiper.js",

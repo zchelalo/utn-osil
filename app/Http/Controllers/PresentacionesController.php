@@ -106,12 +106,33 @@ class PresentacionesController extends Controller
      */
     public function show(int $id)
     {
+        // Establece la configuración regional en español
+        Carbon::setLocale('es');
+
         $aumentar_num_vistas = presentaciones::where('id', $id)->increment('numero_vistas');
 
         if ($aumentar_num_vistas === 0)
         {
             return to_route('inicio')->with('status', 'Hubo un error al entrar a presentaciones');
         }
+        
+        // $presentaciones = fechas::with(['presentaciones', 'congresos'])->where('activo', 1)->distinct('id_presentacion')->get();
+        $presentaciones = fechas::with(['presentaciones', 'congresos'])
+            ->join('presentaciones', 'fechas.id_presentacion', '=', 'presentaciones.id')
+            ->join('tipo_presentaciones', 'presentaciones.id_tipo_presentacion', '=', 'tipo_presentaciones.id')
+            ->where('presentaciones.id', $id)
+            ->select('tipo_presentaciones.nombre as tipo_presentacion_nombre', 'fechas.*')
+            ->orderBy('dia', 'asc')
+            ->orderBy('inicio', 'asc')
+            ->get();
+
+        foreach ($presentaciones as $presentacion) {
+            $presentacion['dia'] = Carbon::parse($presentacion->dia)->format('d-m-Y');
+            $presentacion['inicio'] = Carbon::parse($presentacion->inicio)->format('H:i');
+            $presentacion['fin'] = Carbon::parse($presentacion->fin)->format('H:i');
+        }
+
+        return view('presentaciones.show', ['presentaciones' => $presentaciones]);
     }
 
     /**

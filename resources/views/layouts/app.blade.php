@@ -12,7 +12,6 @@
     "resources/js/index.jsx",
 
     "resources/js/app.js",
-    "resources/js/form.js",
     "resources/css/app.css",
     "resources/css/form.css",
     
