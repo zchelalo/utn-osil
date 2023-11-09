@@ -11,13 +11,14 @@ export default defineConfig({
                 'resources/css/app.css',
                 "resources/css/congresos.css",
                 "resources/css/form.css",
-                "resources/css/talleres.css",
+                "resources/css/presentaciones.css",
 
                 'resources/js/index.jsx',
 
                 'resources/js/app.js',
                 "resources/js/congresos.js",
                 "resources/js/form.js",
+                "resources/js/presentaciones.js",
 
                 "resources/js/librerias/swiper.js",
                 // "resources/js/librerias/sweetalert2.js",
