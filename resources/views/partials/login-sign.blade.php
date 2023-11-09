@@ -2,7 +2,7 @@
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md">
     <div class="modal-content">
-      <form action="" method="post">
+      <form action="{{ route('auth.store') }}" method="post">
         @csrf
         <div class="modal-header bgColor">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Iniciar sesión</h1>

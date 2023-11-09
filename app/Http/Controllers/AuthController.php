@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\usuarios;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -30,7 +32,25 @@ class AuthController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'correo' => ['required', 'string', 'email'],
+            'password' => ['required', 'string'],
+        ]);
+
+        if(!Auth::attempt(['correo' => $data['correo'], 'password' => $data['password']], false))
+        {
+            throw ValidationException::withMessages([
+                'correo' => __('auth.failed')
+            ]);
+        }
+        
+        $usuario = usuarios::with('tipo_usuario')->where('correo', $data['correo'])->first();
+
+        session(['id' => $usuario->id, 'nombre' => $usuario->nombre, 'correo' => $usuario->correo, 'tipo_usuario' => $usuario->tipo_usuario->nombre]);
+
+        $request->session()->regenerate();
+
+        return redirect()->intended()->with(['status' => 'Ha iniciado sesión correctamente', 'icon' => 'success']);
     }
 
     /**
@@ -55,9 +75,7 @@ class AuthController extends Controller
         $usuario->id_tipo_usuario = 1;
         $usuario->save();
 
-        session()->flash('status', 'Verifique su usuario mediante el correo electrónico. Si no encuentra el correo revise la sección de "spam" o correo no deseado');
-
-        return redirect()->intended('/');
+        return redirect()->intended()->with(['status' => 'Verifique su usuario mediante el correo electrónico. Si no encuentra el correo revise la sección de spam o correo no deseado', 'icon' => 'info']);
     }
 
     /**
@@ -87,8 +105,13 @@ class AuthController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        Auth::logout(); // Cierra la sesión
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('inicio')->with(['status' => 'La sesión ha finalizado', 'icon' => 'info']);
     }
 }

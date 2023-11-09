@@ -27,8 +27,8 @@ class usuarios extends Authenticatable
         'password',
     ];
 
-    public function tipo_usuarios()
+    public function tipo_usuario()
     {
-        return $this->belongsTo(tipo_usuarios::class, 'id_tipo_usuario');
+        return $this->belongsTo(tipo_usuario::class, 'id_tipo_usuario');
     }
 }

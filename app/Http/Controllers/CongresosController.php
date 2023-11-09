@@ -78,7 +78,7 @@ class CongresosController extends Controller
 
         if ($aumentar_num_vistas === 0)
         {
-            return to_route('inicio')->with('status', 'Hubo un error al entrar a congresos');
+            return to_route('inicio')->with(['status' => 'Hubo un error al entrar a congresos', 'icon' => 'error']);
         }
 
         $congreso = congresos::with('organizaciones')->find($id);

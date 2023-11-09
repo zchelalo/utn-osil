@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckRoles;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CongresosController;
 use App\Http\Controllers\PresentacionesController;
@@ -25,4 +26,6 @@ Route::get('/congresos/{id}', [CongresosController::class, 'show'])->name('congr
 Route::get('/presentaciones', [PresentacionesController::class, 'index'])->name('presentaciones');
 Route::get('/presentaciones/{id}', [PresentacionesController::class, 'show'])->name('presentaciones.show');
 
-Route::post('/register', [AuthController::class, 'storeUsuario'])->name('auth.store-user');
+Route::post('/login', [AuthController::class, 'store'])->name('auth.store')->middleware('guest');
+Route::post('/register', [AuthController::class, 'storeUsuario'])->name('auth.store-user')->middleware('guest');
+Route::post('/logout', [AuthController::class, 'destroy'])->name('logout')->middleware('checkRoles:Administrador,Presentador,Invitado');

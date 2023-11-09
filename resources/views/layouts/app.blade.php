@@ -21,14 +21,13 @@
     "resources/js/librerias/popper.js",
     
     'resources/js/librerias/bootstrap.js',
-    'resources/js/librerias/sweetalert2.js',
-    'resources/css/librerias/bootstrap.css',
-    'resources/css/librerias/sweetalert2.css'
+    'resources/css/librerias/bootstrap.css'
   ])
 
   @yield('recursos')
 
   <script src="https://kit.fontawesome.com/be5e2a9675.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 <body>
@@ -37,7 +36,7 @@
         window.addEventListener('load', function () {
           Swal.fire({
             text: "{{ session('status') }}",
-            icon: 'info',
+            icon: "{{ session('icon') }}",
             confirmButtonText: 'Cerrar'
           });
         }, false);
@@ -76,16 +75,25 @@
             </ul>
 
             <div class="row">
-              <div class="p-2 col-md-6">
-                <button type="button" class="btn secBgColor btnLogin w-100" data-bs-toggle="modal" data-bs-target="#loginModal">
-                  Iniciar sesión
-                </button>
-              </div>
-              <div class="p-2 col-md-6">
-                <button type="button" class="btn secBgColor btnSignup w-100" data-bs-toggle="modal" data-bs-target="#registerModal">
-                  Registrarse
-                </button>
-              </div>
+              @if(session()->has('id'))
+                <div class="p-2 col-md-12">
+                  <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button class="btn secBgColor btnLogin w-100" type="submit">Cerrar sesión</button>
+                  </form>
+                </div>
+              @else
+                <div class="p-2 col-md-6">
+                  <button type="button" class="btn secBgColor btnLogin w-100" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <i class="fa-solid fa-user"></i> Iniciar sesión
+                  </button>
+                </div>
+                <div class="p-2 col-md-6">
+                  <button type="button" class="btn secBgColor btnSignup w-100" data-bs-toggle="modal" data-bs-target="#registerModal">
+                    <i class="fa-solid fa-right-to-bracket"></i> Registrarse
+                  </button>
+                </div>
+              @endif
             </div>
 
           </div>
