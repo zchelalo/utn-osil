@@ -229,4 +229,13 @@ document.addEventListener('DOMContentLoaded', function() {
       })
     }
   }
+
+  // Agregar presentación de reveal.js
+  const presentacionContainer = document.getElementById('presentacion-container')
+
+  if (presentacionContainer != undefined){
+    Reveal.initialize().then( () => {
+      alert('a')
+    })
+  }
 })

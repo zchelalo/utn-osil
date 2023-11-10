@@ -10,6 +10,10 @@
 {{-- <script src="https://unpkg.com/gsap@3.9.0/dist/gsap.min.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css" integrity="sha512-USp+nLNMZ1hR0Ll/LpYDxIq47Ypcm3KfjIleOnyFrB1N5KfHLXjfPQD1wQlhv7kVHRRgPvNVtendDS72LyHviA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css" integrity="sha512-Nrw40ThKwvPSYyxg6x099eplkB9p5cs2DtorDFSdpapXZlBOJDKK1Hn/gAaYuDQuas6yZJAEG2p2pYQtH80N/w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js" integrity="sha512-9dFFU5pcR8K4bvw4ng6mLMW5IjslYbA57amHEMtHn3TT9RkKivsDabKffqjUUJ4pCaojAyH05T1OESld199Gcw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 @endsection
 
 @section('body')
@@ -38,6 +42,7 @@
           </h3>
           @if(isset($presentaciones[0]->presentaciones->presentacion['pdf']))
             <div id="pdf-container" class="w-100"></div>
+
             <button id="btnPrev" type="button" class="btn bgColor">
               <i class="fa-solid fa-left-long"></i>
             </button>
@@ -45,9 +50,19 @@
             <button id="btnNext" type="button" class="btn bgColor">
               <i class="fa-solid fa-right-long"></i>
             </button>
+
             <input type="hidden" id="pdfUrl" value="{{ $presentaciones[0]->presentaciones->presentacion['pdf'] }}">
           @else
-            
+            <div id="presentacion-container" class="w-100">
+              <div class="reveal">
+                <div class="slides">
+                  <!-- Tus diapositivas van aquí -->
+                  <section>Diapositiva 1</section>
+                  <section>Diapositiva 2</section>
+                  <section>Diapositiva 3</section>
+                </div>
+              </div>
+            </div>
           @endif
         </div>
         <hr class="hrPresentacion d-none">
