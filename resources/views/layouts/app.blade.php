@@ -75,6 +75,14 @@
             </ul>
 
             <div class="row">
+              @if(session('tipo_usuario') === 'Administrador')
+                <div class="p-2 col-md-12">
+                  <a href="#" class="btn secBgColor w-100">
+                    <i class="fa-solid fa-lock"></i> Administración
+                  </a>
+                </div>
+              @endif
+
               @if(session()->has('id'))
                 <div class="p-2 col-md-12">
                   <form action="{{ route('logout') }}" method="post">

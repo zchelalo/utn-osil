@@ -50,7 +50,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended()->with(['status' => 'Ha iniciado sesión correctamente', 'icon' => 'success']);
+        return redirect()->intended('/')->with(['status' => 'Ha iniciado sesión correctamente', 'icon' => 'success']);
     }
 
     /**
