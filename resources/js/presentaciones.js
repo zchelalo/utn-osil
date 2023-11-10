@@ -199,28 +199,34 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     function renderPage(pageNumber) {
-      container.innerHTML = ''
       pdfDoc.getPage(pageNumber).then(page => {
+        container.innerHTML = ''
+
         const canvas = document.createElement("canvas")
-        const scale = 1.5;
+        const scale = 1.5
         const viewport = page.getViewport({ scale })
   
         const context = canvas.getContext("2d")
         canvas.style.height = "100%"
         canvas.style.width = "100%"
   
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
+        canvas.height = viewport.height
+        canvas.width = viewport.width
   
         const renderContext = {
           canvasContext: context,
           viewport: viewport,
         }
   
-        container.appendChild(canvas);
-        page.render(renderContext);
+        container.appendChild(canvas)
+        page.render(renderContext)
+
+        container.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "nearest",
+        })
       })
-      // pageNum.textContent = pageNumber
     }
   }
 })
