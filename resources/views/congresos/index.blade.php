@@ -25,8 +25,10 @@
               <div class="card-body">
                 <h5 class="card-title">{{ $value->nombre }}</h5>
                 <p class="card-text">{{ $value->descripcion }}</p>
-                <small class="card-text">Comienza: {{ $value->fecha_inicio }}</small>
-                <small class="card-text">Termina: {{ $value->fecha_fin }}</small>
+                @if(isset($value->fecha_inicio) && isset($value->fecha_fin))
+                  <small class="card-text">Comienza: {{ $value->fecha_inicio }}</small>
+                  <small class="card-text">Termina: {{ $value->fecha_fin }}</small>
+                @endif
               </div>
             </div>
           </div>

@@ -17,17 +17,60 @@
 
 <div class="container-fluid">
   <section class="row col-md-12 mt-3 mb-3 d-flex justify-content-center align-items-center">
-    <article class="col-md-12 mb-3">
-      <h1>{{ $congreso->nombre }}</h1>
-      <p>
-        {{ $congreso->descripcion }}
-      </p>
-      @if(isset($congreso->fecha_inicio))
-        <span>Duración: {{ $congreso->fecha_inicio }} - {{ $congreso->fecha_fin }}</span><br>
-      @endif
-      <span>Horario: <a href="#">Descargar</a></span>
+    <article class="col-md-12">
+      <div class="row text-center p-2">
+        <h1>{{ $congreso->nombre }}</h1>
+  
+        <div class="col-md-12 mb-2 p-1">
+          <div class="card">
+            <div class="card-body">
+              {{ $congreso->descripcion }}
+            </div>
+          </div>
+        </div>
+
+
+        @if(isset($congreso->fecha_inicio) && isset($congreso->fecha_fin))
+          <div class="col-md-6 mb-2 p-1">
+            <div class="card">
+              <div class="card-body">
+                <span>Duración: {{ $congreso->fecha_inicio }} - {{ $congreso->fecha_fin }}</span><br>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-2 p-1">
+            <div class="card">
+              <div class="card-body">
+                <span>Horario: <a href="#">Descargar</a></span>
+              </div>
+            </div>
+          </div>
+        @else
+          <div class="col-md-12 mb-2 p-1">
+            <div class="card">
+              <div class="card-body">
+                <span>Horario: <a href="#">Descargar</a></span>
+              </div>
+            </div>
+          </div>
+        @endif
+
+        
+  
+        @if(isset($congreso->organizaciones->nombre))
+          <div class="col-md-12 mb-2 p-1">
+            <div class="card">
+              <div class="card-body">
+                Organizado por: <a href="#">{{ $congreso->organizaciones->nombre }}</a>
+              </div>
+            </div>
+          </div>
+        @endif
+  
+      </div>
     </article>
-    <div class="col-md-8">@include('partials.slider-congresos')</div>
+    <div class="col-md-12">@include('partials.slider-congresos')</div>
   </section>
 
 
