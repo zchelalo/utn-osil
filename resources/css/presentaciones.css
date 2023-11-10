@@ -12,6 +12,30 @@
   width: auto;
 }
 
+.headerFechasPresentacionesPendiente {
+  background-color: rgba(254, 202, 87,1.0);
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+}
+
+.headerFechasPresentacionesTerminada {
+  background-color: rgba(39, 174, 96,1.0);
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+}
+
+.cardFechasPresentaciones {
+  transition: transform 0.2s;
+}
+
+.cardFechasPresentaciones:hover {
+  transform: scale(1.05);
+}
+
+.imgFechaPresentacion {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
 @media (max-width: 992px) {
   .contenedorInfoPresentaciones {
     width: 66%;
@@ -38,5 +62,9 @@
 
   .contenedorImgPresentaciones {
     width: 100%;
+  }
+
+  .hrPresentacion {
+    display: block;
   }
 }

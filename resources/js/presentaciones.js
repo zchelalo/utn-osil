@@ -101,13 +101,39 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Agrega un evento de clic a cada enlace
-  tipoPresentacionesLinks.forEach((link) => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault()
-      // Accede al atributo 'id-tipo' y muestra su valor
-      idTipo = link.getAttribute('id-tipo')
+  if (tipoPresentacionesLinks != undefined){
+    // Agrega un evento de clic a cada enlace
+    tipoPresentacionesLinks.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault()
+        // Accede al atributo 'id-tipo' y muestra su valor
+        idTipo = link.getAttribute('id-tipo')
 
+        if (idTipo != '' && busqueda != '')
+        {
+          obtenerDatos(`?idTipo=${idTipo}&nombrePresentacion=${busqueda}`)
+        }
+        else if (idTipo != '' && busqueda == '')
+        {
+          obtenerDatos(`?idTipo=${idTipo}`)
+        }
+        else if (idTipo == '' && busqueda != '')
+        {
+          obtenerDatos(`?nombrePresentacion=${busqueda}`)
+        }
+        else
+        {
+          obtenerDatos()
+        }
+
+      })
+    })
+  }
+  
+  if (buscador != undefined){
+    buscador.addEventListener('change', () => {
+      busqueda = buscador.value
+  
       if (idTipo != '' && busqueda != '')
       {
         obtenerDatos(`?idTipo=${idTipo}&nombrePresentacion=${busqueda}`)
@@ -124,28 +150,77 @@ document.addEventListener('DOMContentLoaded', function() {
       {
         obtenerDatos()
       }
-
     })
-  })
+  }
 
-  buscador.addEventListener('change', () => {
-    busqueda = buscador.value
+  // URL del archivo PDF
+  const pdfElement = document.getElementById('pdfUrl')
 
-    if (idTipo != '' && busqueda != '')
-    {
-      obtenerDatos(`?idTipo=${idTipo}&nombrePresentacion=${busqueda}`)
+  const btnPrev = document.getElementById('btnPrev')
+  const btnNext = document.getElementById('btnNext')
+
+  const paginador = document.getElementById('paginaActual')
+
+  if (pdfElement != undefined){
+    const pdfUrl = pdfElement.value
+    let pageNum = 1 // Número de página que deseas mostrar
+    let numeroMaximoDePaginas = undefined
+    let pdfDoc = null
+
+    // Elemento del contenedor
+    const container = document.getElementById("pdf-container")
+  
+    // Cargar y mostrar el PDF
+    pdfjsLib.getDocument(pdfUrl).promise.then(doc => {
+      pdfDoc = doc;
+      numeroMaximoDePaginas = pdfDoc.numPages;
+      paginador.innerText = pageNum
+      renderPage(pageNum);
+    })
+
+    btnPrev.addEventListener('click', (e) => {
+      e.preventDefault()
+
+      if (pageNum > 1){
+        pageNum--
+        paginador.innerText = pageNum
+        renderPage(pageNum)
+      }
+    })
+
+    btnNext.addEventListener('click', (e) => {
+      e.preventDefault()
+
+      if (pageNum < numeroMaximoDePaginas){
+        pageNum++
+        paginador.innerText = pageNum
+        renderPage(pageNum)
+      }
+    })
+
+    function renderPage(pageNumber) {
+      container.innerHTML = ''
+      pdfDoc.getPage(pageNumber).then(page => {
+        const canvas = document.createElement("canvas")
+        const scale = 1.5;
+        const viewport = page.getViewport({ scale })
+  
+        const context = canvas.getContext("2d")
+        canvas.style.height = "100%"
+        canvas.style.width = "100%"
+  
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+  
+        const renderContext = {
+          canvasContext: context,
+          viewport: viewport,
+        }
+  
+        container.appendChild(canvas);
+        page.render(renderContext);
+      })
+      // pageNum.textContent = pageNumber
     }
-    else if (idTipo != '' && busqueda == '')
-    {
-      obtenerDatos(`?idTipo=${idTipo}`)
-    }
-    else if (idTipo == '' && busqueda != '')
-    {
-      obtenerDatos(`?nombrePresentacion=${busqueda}`)
-    }
-    else
-    {
-      obtenerDatos()
-    }
-  })
+  }
 })

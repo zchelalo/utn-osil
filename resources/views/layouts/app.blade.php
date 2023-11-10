@@ -79,7 +79,7 @@
                 <div class="p-2 col-md-12">
                   <form action="{{ route('logout') }}" method="post">
                     @csrf
-                    <button class="btn secBgColor btnLogin w-100" type="submit">Cerrar sesión</button>
+                    <button class="btn secBgColor btnLogin w-100" type="submit"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
                   </form>
                 </div>
               @else

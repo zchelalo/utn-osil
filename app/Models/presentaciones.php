@@ -19,6 +19,10 @@ class presentaciones extends Model
         'id_usuario',
     ];
 
+    protected $casts = [
+        'presentacion' => 'array', // Convierte la columna 'direccion' en un arreglo asociativo
+    ];
+
     public function fechas()
     {
         return $this->hasOne(fechas::class, 'id_presentacion');
