@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
           canvasContext: context,
           viewport: viewport,
         }
-  
+
         container.appendChild(canvas)
         page.render(renderContext)
 

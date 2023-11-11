@@ -41,6 +41,28 @@
         }, false);
     </script>
   @endif
+  @if(session('login') === 'open')
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Obtén una referencia al modal por su ID
+        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'))
+
+        // Abre el modal
+        loginModal.show()
+      })
+    </script>
+  @endif
+  @if($errors->has('nombre') || $errors->has('matricula') || $errors->has('correo') || $errors->has('password'))
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Obtén una referencia al modal por su ID
+        const registerModal = new bootstrap.Modal(document.getElementById('registerModal'))
+
+        // Abre el modal
+        registerModal.show()
+      })
+    </script>
+  @endif
   {{-- <div id="root"></div> --}}
   <header>
     <nav class="navbar fixed-top bgColor">

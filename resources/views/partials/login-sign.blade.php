@@ -11,12 +11,15 @@
         <div class="modal-body">
 
           <div class="mb-3">
-            <label for="correo" class="form-label">Correo</label>
-            <input type="email" id="correo" name="correo" class="form-control" placeholder="correo@example.com">
+            <label for="loginCorreo" class="form-label">Correo</label>
+            <input type="email" id="loginCorreo" name="loginCorreo" class="form-control" placeholder="correo@example.com" value="{{ old('loginCorreo', '') }}">
+            @error('loginCorreo')
+              <small class="fw-bold text-danger">{{ $message }}</small>
+            @enderror
           </div>
           <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" id="password" name="password" class="form-control" aria-describedby="passwordHelpBlock">
+            <label for="loginPassword" class="form-label">Password</label>
+            <input type="password" id="loginPassword" name="loginPassword" class="form-control" aria-describedby="passwordHelpBlock">
           </div>
 
         </div>
@@ -43,21 +46,21 @@
 
           <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" id="nombre" name="nombre" class="form-control">
+            <input type="text" id="nombre" name="nombre" class="form-control" value="{{ old('nombre', '') }}">
             @error('nombre')
               <small class="fw-bold text-danger">{{ $message }}</small>
             @enderror
           </div>
           <div class="mb-3">
             <label for="matricula" class="form-label">Matrícula <small>(opcional)</small></label>
-            <input type="text" id="matricula" name="matricula" class="form-control">
+            <input type="text" id="matricula" name="matricula" class="form-control" value="{{ old('matricula', '') }}">
             @error('matricula')
               <small class="fw-bold text-danger">{{ $message }}</small>
             @enderror
           </div>
           <div class="mb-3">
             <label for="correo" class="form-label">Correo</label>
-            <input type="email" id="correo" name="correo" class="form-control" placeholder="correo@example.com">
+            <input type="email" id="correo" name="correo" class="form-control" placeholder="correo@example.com" value="{{ old('correo', '') }}">
             @error('correo')
               <small class="fw-bold text-danger">{{ $message }}</small>
             @enderror

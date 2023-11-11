@@ -33,18 +33,21 @@ class AuthController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'correo' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'loginCorreo' => ['required', 'string', 'email'],
+            'loginPassword' => ['required', 'string'],
         ]);
 
-        if(!Auth::attempt(['correo' => $data['correo'], 'password' => $data['password']], false))
+        if(!Auth::attempt(['correo' => $data['loginCorreo'], 'password' => $data['loginPassword']], false))
         {
+            // session()->flash('status', 'Las credenciales ingresadas no coinciden con nuestros registros');
+            // session()->flash('icon', 'error');
+            session()->flash('login', 'open');
             throw ValidationException::withMessages([
-                'correo' => __('auth.failed')
+                'loginCorreo' => __('auth.failed')
             ]);
         }
         
-        $usuario = usuarios::with('tipo_usuario')->where('correo', $data['correo'])->first();
+        $usuario = usuarios::with('tipo_usuario')->where('correo', $data['loginCorreo'])->first();
 
         session(['id' => $usuario->id, 'nombre' => $usuario->nombre, 'correo' => $usuario->correo, 'tipo_usuario' => $usuario->tipo_usuario->nombre]);
 
@@ -75,7 +78,7 @@ class AuthController extends Controller
         $usuario->id_tipo_usuario = 1;
         $usuario->save();
 
-        return redirect()->intended()->with(['status' => 'Verifique su usuario mediante el correo electrónico. Si no encuentra el correo revise la sección de spam o correo no deseado', 'icon' => 'info']);
+        return redirect()->intended('/')->with(['status' => 'Verifique su usuario mediante el correo electrónico. Si no encuentra el correo revise la sección de spam o correo no deseado', 'icon' => 'info']);
     }
 
     /**

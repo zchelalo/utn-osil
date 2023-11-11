@@ -50,14 +50,7 @@
             <input type="hidden" id="pdfUrl" value="{{ $presentaciones[0]->presentaciones->presentacion['pdf'] }}">
           @else
             <div id="presentacion-container" class="w-100">
-              <div class="reveal">
-                <div class="slides">
-                  <!-- Tus diapositivas van aquí -->
-                  <section>Diapositiva 1</section>
-                  <section>Diapositiva 2</section>
-                  <section>Diapositiva 3</section>
-                </div>
-              </div>
+              
             </div>
           @endif
         </div>
