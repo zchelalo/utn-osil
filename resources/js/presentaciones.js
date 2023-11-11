@@ -234,8 +234,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const presentacionContainer = document.getElementById('presentacion-container')
 
   if (presentacionContainer != undefined){
-    Reveal.initialize().then( () => {
-      alert('a')
-    })
+    
+    // alert('a')
   }
 })

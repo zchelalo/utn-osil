@@ -10,7 +10,6 @@ export default defineConfig({
 
                 'resources/css/app.css',
                 "resources/css/congresos.css",
-                "resources/css/form.css",
                 "resources/css/presentaciones.css",
 
                 'resources/js/index.jsx',
