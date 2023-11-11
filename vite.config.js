@@ -12,9 +12,15 @@ export default defineConfig({
                 "resources/css/congresos.css",
                 "resources/css/presentaciones.css",
 
-                'resources/js/index.jsx',
+                "resources/css/estilos_chatbot/burbuja.css",
+                "resources/css/estilos_chatbot/estilos_bot.css",
 
-                'resources/js/app.js',
+                'resources/js/index.jsx',
+                'resources/js/app.jsx',
+
+                'resources/js/compontents/Chatbot.jsx',
+                'resources/js/compontents/ChatInterface.jsx',
+
                 "resources/js/congresos.js",
                 "resources/js/presentaciones.js",
 

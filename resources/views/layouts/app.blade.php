@@ -10,8 +10,8 @@
   @viteReactRefresh
   @vite([
     "resources/js/index.jsx",
+    "resources/js/app.jsx",
 
-    "resources/js/app.js",
     "resources/css/app.css",
     
     // 'resources/sass/app.scss',
@@ -63,7 +63,7 @@
       })
     </script>
   @endif
-  {{-- <div id="root"></div> --}}
+  <div id="root"></div>
   <header>
     <nav class="navbar fixed-top bgColor">
       <div class="container-fluid">
