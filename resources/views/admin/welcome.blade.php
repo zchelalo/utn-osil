@@ -1,16 +1,18 @@
-@extends('layouts.admin')
-@section('title', "UTN Osil")
+@extends('adminlte::page')
 
-{{-- @section('recursos')
-@vite([
+@section('title', 'Dashboard UTN Osil')
 
-])
-@endsection --}}
+@section('content_header')
+  <h1>Dashboard</h1>
+@stop
 
-@section('body')
-<section class="container-fluid">
-  <div class="row">
-    
-  </div>
-</section>
-@endsection
+@section('content')
+  <p>Panel de administración de UTN Osil.</p>
+@stop
+
+@section('css')
+  @viteReactRefresh
+  @vite([
+    "resources/css/admin.css"
+  ])
+@stop
