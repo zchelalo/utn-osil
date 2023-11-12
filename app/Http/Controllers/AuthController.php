@@ -49,13 +49,14 @@ class AuthController extends Controller
         
         $usuario = usuarios::with('tipo_usuario')->where('correo', $data['loginCorreo'])->first();
 
-        $token = $usuario->createToken('UTN-Osil')->plainTextToken;
+        // $token = $usuario->createToken('UTN-Osil')->plainTextToken;
 
         session(['id' => $usuario->id, 'nombre' => $usuario->nombre, 'correo' => $usuario->correo, 'tipo_usuario' => $usuario->tipo_usuario->nombre]);
 
         $request->session()->regenerate();
 
-        return redirect()->intended('/')->with(['status' => 'Ha iniciado sesión correctamente', 'icon' => 'success', 'token' => $token]);
+        // 'token' => $token
+        return redirect()->intended('/')->with(['status' => 'Ha iniciado sesión correctamente', 'icon' => 'success']);
     }
 
     /**

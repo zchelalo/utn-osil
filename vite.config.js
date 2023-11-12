@@ -11,7 +11,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 "resources/css/congresos.css",
                 "resources/css/presentaciones.css",
-                "resources/css/admin/organizaciones.css",
+                "resources/css/admin/admin.css",
 
                 "resources/css/estilos_chatbot/burbuja.css",
                 "resources/css/estilos_chatbot/estilos_bot.css",

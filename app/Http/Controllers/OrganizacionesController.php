@@ -12,13 +12,8 @@ class OrganizacionesController extends Controller
      */
     public function indexAdmin()
     {
-        return view('admin.organizaciones.index');
-    }
-
-    public function index()
-    {
         $organizaciones = organizaciones::get();
-        return response()->json($organizaciones);
+        return view('admin.organizaciones.index', ['organizaciones' => $organizaciones]);
     }
 
     /**
