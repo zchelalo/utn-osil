@@ -29,6 +29,14 @@
 
 </head>
 <body>
+  @if(session('token'))
+
+    <script>
+      const token = "{{ session('token') }}"
+      // Almacenar el token en una cookie
+      document.cookie = `token=${token}; path=/; secure; samesite=strict; max-age=7200;`;
+    </script>
+  @endif
   @if(session('status'))
     <script>
         window.addEventListener('load', function () {

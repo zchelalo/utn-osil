@@ -6,6 +6,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CongresosController;
 use App\Http\Controllers\PresentacionesController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrganizacionesController;
 
 // RUTAS DE LA APLICACIÓN
 Route::get('/', [WelcomeController::class, 'index'])->name('inicio');
@@ -21,4 +22,8 @@ Route::post('/register', [AuthController::class, 'storeUsuario'])->name('auth.st
 Route::post('/logout', [AuthController::class, 'destroy'])->name('logout')->middleware('checkRoles:Administrador,Presentador,Invitado');
 
 // RUTAS DEL DASHBOARD
-Route::get('/admin', [WelcomeController::class, 'indexAdmin'])->name('admin')->middleware('checkRoles:Administrador');
+Route::middleware(['checkRoles:Administrador'])->prefix('admin')->group(function () {
+  Route::get('/', [WelcomeController::class, 'indexAdmin'])->name('admin');
+
+  Route::get('/organizaciones', [OrganizacionesController::class, 'indexAdmin'])->name('admin.organizaciones');
+});

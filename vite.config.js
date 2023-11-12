@@ -9,9 +9,9 @@ export default defineConfig({
                 // 'resources/sass/app.scss',
 
                 'resources/css/app.css',
-                'resources/css/admin.css',
                 "resources/css/congresos.css",
                 "resources/css/presentaciones.css",
+                "resources/css/admin/organizaciones.css",
 
                 "resources/css/estilos_chatbot/burbuja.css",
                 "resources/css/estilos_chatbot/estilos_bot.css",
@@ -19,7 +19,6 @@ export default defineConfig({
                 'resources/js/index.jsx',
                 'resources/js/app.jsx',
 
-                'resources/js/admin.js',
                 "resources/js/congresos.js",
                 "resources/js/presentaciones.js",
 
