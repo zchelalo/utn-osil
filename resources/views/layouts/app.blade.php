@@ -98,7 +98,7 @@
             <div class="row">
               @if(session('tipo_usuario') === 'Administrador')
                 <div class="p-2 col-md-12">
-                  <a href="#" class="btn secBgColor w-100">
+                  <a href="{{ route('admin') }}" class="btn secBgColor w-100">
                     <i class="fa-solid fa-lock"></i> Administración
                   </a>
                 </div>
