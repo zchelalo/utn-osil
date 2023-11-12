@@ -3,10 +3,17 @@ import "../../css/estilos_chatbot/estilos_bot.css"; //Importamos los estilos CSS
 
 
 const urlHost = document.getElementById('urlHost').value
+
 const isImageURL = (url) => {
   // Expresión regular para validar si es una URL de imagen
   const imageRegex = /\.(jpeg|jpg|gif|png|svg)$/;
   return imageRegex.test(url);
+};
+
+const isPdfURL = (url) => {
+  // Expresión regular para validar si es una URL de imagen
+  const pdfRegex = /\.(pdf)$/;
+  return pdfRegex.test(url);
 };
 
 const ChatInterface = ({ onClick }) => {
@@ -105,7 +112,11 @@ const ChatInterface = ({ onClick }) => {
               {isImageURL(message.text) ? (
                 <img className="img-chatBot-respuesta" src={message.text} />
               ) : (
-                message.text
+                isPdfURL(message.text) ? (
+                  <a href={message.text} download>Descargar PDF</a>
+                ) : (
+                  message.text
+                )
               )}
             </span>
           </div>

@@ -115,6 +115,12 @@
   color: rgba(0, 0, 0,0.6);
 }
 
+.message.bot > span a {
+  color: rgba(0, 0, 0,0.6) !important;
+  text-decoration: underline !important;
+  font-weight: bold !important;
+}
+
 .img-chatBot-respuesta {
   width: 100%;
   height: auto;
