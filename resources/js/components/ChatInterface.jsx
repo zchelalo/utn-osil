@@ -1,8 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import "../../css/estilos_chatbot/estilos_bot.css"; //Importamos los estilos CSS
-
+import { RViewerTrigger,RViewer  } from "react-viewerjs"
 
 const urlHost = document.getElementById('urlHost').value
+
+let options = {
+  toolbar: {//Since there is only one picture, let's hide "prev" and "next"
+    prev: false,
+    next: false
+  }
+}
 
 const isImageURL = (url) => {
   // Expresión regular para validar si es una URL de imagen
@@ -110,7 +117,11 @@ const ChatInterface = ({ onClick }) => {
           <div key={index} className={`message ${message.isUser ? 'user' : 'bot'}`}>
             <span>
               {isImageURL(message.text) ? (
-                <img className="img-chatBot-respuesta" src={message.text} />
+                <RViewer options={options} imageUrls={message.text}>
+                  <RViewerTrigger>
+                    <img className="img-chatBot-respuesta" src={message.text}/>
+                  </RViewerTrigger>
+                </RViewer>
               ) : (
                 isPdfURL(message.text) ? (
                   <a href={message.text} download>Descargar PDF</a>

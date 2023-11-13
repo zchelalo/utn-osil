@@ -19,6 +19,26 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
+
+  scrollbar-color: #aaaaaa #f1f1f1;
+  scrollbar-width: thin;
+}
+
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #aaaaaa;
+  border-radius: 6px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #8d8d8d;
 }
 
 .mainContainer {
