@@ -30,4 +30,10 @@ Route::middleware(['checkRoles:Administrador'])->prefix('admin')->group(function
   Route::put('/organizaciones/{organizacion}', [OrganizacionesController::class, 'update'])->name('admin.organizaciones.update');
   Route::post('/organizaciones', [OrganizacionesController::class, 'store'])->name('admin.organizaciones.store');
   Route::delete('/organizaciones/{organizacion}', [OrganizacionesController::class, 'destroy'])->name('admin.organizaciones.destroy');
+
+  Route::get('/congresos', [CongresosController::class, 'indexAdmin'])->name('admin.congresos');
+  Route::get('/congresos/{congreso}', [CongresosController::class, 'edit'])->name('admin.congresos.edit');
+  Route::put('/congresos/{congreso}', [CongresosController::class, 'update'])->name('admin.congresos.update');
+  Route::post('/congresos', [CongresosController::class, 'store'])->name('admin.congresos.store');
+  Route::delete('/congresos/{congreso}', [CongresosController::class, 'destroy'])->name('admin.congresos.destroy');
 });

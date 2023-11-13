@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\congresos;
 use App\Models\fechas;
+use App\Models\organizaciones;
 use App\Models\presentaciones;
 use App\Models\tipo_presentacion;
 use Carbon\Carbon;
@@ -53,15 +54,9 @@ class CongresosController extends Controller
 
     public function indexAdmin()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $congresos = congresos::with('organizaciones')->get();
+        $organizaciones = organizaciones::get();
+        return view('admin.congresos.index', ['congresos' => $congresos, 'organizaciones' => $organizaciones]);
     }
 
     /**
@@ -141,7 +136,9 @@ class CongresosController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $congreso = congresos::find($id);
+        $organizaciones = organizaciones::get();
+        return view('admin.congresos.edit', ['congreso' => $congreso, 'organizaciones' => $organizaciones]);
     }
 
     /**

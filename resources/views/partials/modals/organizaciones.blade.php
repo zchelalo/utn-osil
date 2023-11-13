@@ -69,7 +69,7 @@
           </div>
   
           <div class="mb-3 col-md-6">
-            <label for="numInt" class="form-label">Número interior</label>
+            <label for="numInt" class="form-label">Número interior (opcional)</label>
             <input type="text" class="form-control" id="numInt" name="numInt" value="{{ old('numInt', '') }}">
             @error('numInt')
               <small class="fw-bold text-danger">{{ $message }}</small>
