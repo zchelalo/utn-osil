@@ -26,4 +26,8 @@ Route::middleware(['checkRoles:Administrador'])->prefix('admin')->group(function
   Route::get('/', [WelcomeController::class, 'indexAdmin'])->name('admin');
 
   Route::get('/organizaciones', [OrganizacionesController::class, 'indexAdmin'])->name('admin.organizaciones');
+  Route::get('/organizaciones/{organizacion}', [OrganizacionesController::class, 'edit'])->name('admin.organizaciones.edit');
+  Route::put('/organizaciones/{organizacion}', [OrganizacionesController::class, 'update'])->name('admin.organizaciones.update');
+  Route::post('/organizaciones', [OrganizacionesController::class, 'store'])->name('admin.organizaciones.store');
+  Route::delete('/organizaciones/{organizacion}', [OrganizacionesController::class, 'destroy'])->name('admin.organizaciones.destroy');
 });

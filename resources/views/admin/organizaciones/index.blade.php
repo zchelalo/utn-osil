@@ -7,12 +7,46 @@
 @stop
 
 @section('content')
+  @if(session('status'))
+    <script>
+        window.addEventListener('load', function () {
+          Swal.fire({
+            text: "{{ session('status') }}",
+            icon: "{{ session('icon') }}",
+            confirmButtonText: 'Cerrar',
+            confirmButtonColor: '#218c74'
+          });
+        }, false);
+    </script>
+  @endif
+  @if($errors->any())
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Obtén una referencia al modal por su ID
+        const createModal = new bootstrap.Modal(document.getElementById('organizacionesModal'))
+
+        // Abre el modal
+        createModal.show()
+      })
+    </script>
+  @endif
+
+  <button type="button" class="btn bgColor btnAgregar m-0 mb-3" data-bs-toggle="modal" data-bs-target="#organizacionesModal">
+    <i class="fas fa-solid fa-plus"></i> Agregar
+  </button>
+
   <table class="table table-striped w-100" id="tablaOrganizaciones">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Nombre</th>
-        <th scope="col">Dirección</th>
+        <th scope="col">País</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Municipio</th>
+        <th scope="col">Colonia</th>
+        <th scope="col">Calle</th>
+        <th scope="col">Núm exterior</th>
+        <th scope="col">Núm interior</th>
         <th scope="col">Acciones</th>
       </tr>
     </thead>
@@ -30,14 +64,32 @@
               {{ $organizacion->direccion['pais'] }}
             </td>
             <td>
+              {{ $organizacion->direccion['estado'] }}
+            </td>
+            <td>
+              {{ $organizacion->direccion['municipio'] }}
+            </td>
+            <td>
+              {{ $organizacion->direccion['colonia'] }}
+            </td>
+            <td>
+              {{ $organizacion->direccion['calle'] }}
+            </td>
+            <td>
+              {{ $organizacion->direccion['num_ext'] }}
+            </td>
+            <td>
+              {{ $organizacion->direccion['num_int'] }}
+            </td>
+            <td>
               <div class="d-flex">
-                <a href="" class="btn bgColor btn-sm mr-1">
+                <a href="{{ route('admin.organizaciones.edit', $organizacion) }}" class="btn btn-primary btn-sm mr-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar">
                   <i class="fas fa-solid fa-pen"></i>
                 </a>
-                <form action="" method="post" class="p-0 m-0">
+                <form action="{{ route('admin.organizaciones.destroy', $organizacion) }}" method="post" class="p-0 m-0">
                   @csrf
                   @method('delete')
-                  <button type="submit" class="btn btn-danger btn-sm">
+                  <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Eliminar">
                     <i class="fas fa-solid fa-trash"></i>
                   </button>
                 </form>
@@ -48,6 +100,9 @@
       @endif
     </tbody>
   </table>
+  <br><br>
+
+  @include('partials.modals.organizaciones')
 
   {{-- <input type="hidden" id="urlHost" name="urlHost" value="{{ url('/')}}"> --}}
 @stop
@@ -61,13 +116,8 @@
     'resources/js/librerias/bootstrap.js',
     'resources/css/librerias/bootstrap.css'
   ])
-
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 @stop
 
-@section('js')
-  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-@stop
+{{-- @section('js')
+  
+@stop --}}

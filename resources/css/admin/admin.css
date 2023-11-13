@@ -60,3 +60,13 @@ button.secBgColor:hover {
 .textColor {
   color: var(--text-color) !important;
 }
+
+.btnAgregar {
+  margin-left: 1rem;
+}
+
+@media (max-width: 768px){
+  .btnAgregar {
+    margin-left: 0;
+  }
+}

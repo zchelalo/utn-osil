@@ -11,8 +11,11 @@
 @stop
 
 @section('css')
-  {{-- @viteReactRefresh
+  @viteReactRefresh
   @vite([
-    "resources/css/admin.css"
-  ]) --}}
+    "resources/css/admin/admin.css",
+
+    'resources/js/librerias/bootstrap.js',
+    'resources/css/librerias/bootstrap.css'
+  ])
 @stop
