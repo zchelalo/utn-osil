@@ -19,53 +19,139 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   })
 
-  const btnVer = document.getElementById('btnVer')
+  const btnVer = document.querySelectorAll('.btnVer')
 
-  if (btnVer != undefined){
-    const gallery = new Viewer(document.getElementById('images'))
+  if (btnVer.length > 0){
+    const galleries = []
 
-    btnVer.addEventListener('click', (e) =>{
-      e.preventDefault()
+    btnVer.forEach((ver, index) => {
+      const galleryContainer = document.querySelectorAll('.images')[index]
+      const gallery = new Viewer(galleryContainer)
 
-      gallery.show()
+      galleries.push(gallery);
+
+      ver.addEventListener('click', (e) => {
+        e.preventDefault()
+        
+
+        // Mostrar la galería correspondiente al botón clicado
+        galleries[index].show();
+      })
     })
   }
 
   const imagen = document.getElementById('imagen')
+
+  let base64Image
+  let cropperInstance
+
+  let toastPregunta = document.getElementById('toastPregunta')
+  let toast = new bootstrap.Toast(toastPregunta)
 
   if (imagen != undefined){
     imagen.addEventListener('change', (e) => {
       e.preventDefault()
 
       const selectedFile = imagen.files[0]
-
+      
       if (selectedFile) {
+        // Obtener el peso de la imagen en kilobytes
+        const pesoEnMegabytes = selectedFile.size / (1024 * 1024)
+        if (pesoEnMegabytes > 5)
+        {
+          Swal.fire({
+            text: "La imagen no puede pesar mas de 5MB",
+            icon: "error",
+            confirmButtonText: 'Cerrar',
+            confirmButtonColor: '#218c74'
+          })
+
+          // Verificar si el input de imagen existe
+          if (imagen) {
+            // Limpiar el valor del input de imagen
+            imagen.value = '';
+          }
+
+          return
+        }
+
         const imageURL = URL.createObjectURL(selectedFile)
 
         const editor = document.querySelector('.editor')
         let img = document.createElement("img")
         img.style.display = 'block'
         img.style.maxWidth = '100%'
+        img.id = 'imgRecortada'
         img.src = imageURL
 
         editor.appendChild(img)
 
-        const cropper = new Cropper(img, {
-          aspectRatio: 16 / 9,
+        cropperInstance = new Cropper(img, {
+          aspectRatio: 16 / 7,
           viewMode: 2,
           minContainerHeight: 50,
-          crop(event) {
-            // console.log(event.detail.x);
-            // console.log(event.detail.y);
-            // console.log(event.detail.width);
-            // console.log(event.detail.height);
-            // console.log(event.detail.rotate);
-            // console.log(event.detail.scaleX);
-            // console.log(event.detail.scaleY);
+          cropend(event) {
+            // Obtener el contenido en base64 después de recortar la imagen
+            base64Image = cropperInstance.getCroppedCanvas().toDataURL("image/png")
+
+            // Mostrar el toast después de recortar
+            toast.show()
           },
         })
       }
       
+    })
+  }
+
+  const btnRecortar = document.getElementById('btnRecortar')
+  const contenedorInputsImg = document.getElementById('contenedorInputsImg')
+  let indice = 0
+
+  if (btnRecortar != undefined){
+    btnRecortar.addEventListener('click', (e) => {
+      e.preventDefault()
+
+      // Crear un elemento input
+      let inputElement = document.createElement("input")
+
+      // Configurar los atributos del elemento input
+      inputElement.type = "text"
+      inputElement.className = "d-none"
+      inputElement.name = `img[${indice}]`
+      inputElement.value = base64Image
+
+      contenedorInputsImg.appendChild(inputElement)
+
+      indice++
+
+      if (cropperInstance) {
+        cropperInstance.destroy()
+      }
+
+      // Verificar si el elemento de imagen existe y tiene un padre
+      if (imgRecortada && imgRecortada.parentNode) {
+        // Obtener el nodo padre (elemento contenedor) del elemento de imagen
+        const contenedor = imgRecortada.parentNode
+
+        // Eliminar el elemento de imagen del DOM al llamar al método removeChild en el nodo padre
+        contenedor.removeChild(imgRecortada)
+      }
+
+      // Verificar si el input de imagen existe
+      if (imagen) {
+        // Limpiar el valor del input de imagen
+        imagen.value = '';
+      }
+
+      toast.hide()
+
+      Swal.fire({
+        title: "¡Imagen agregada correctamente!",
+        text: "Si desea agregar otra imagen puede hacerlo",
+        icon: "success",
+        confirmButtonText: 'Cerrar',
+        confirmButtonColor: '#218c74'
+      })
     })
   }
 })

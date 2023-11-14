@@ -63,13 +63,13 @@
             </td>
             <td>
               @if(isset($congreso->img[0]))
-                <button type="button" class="btn bgColor btn-sm" id="btnVer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ver imagenes">
+                <button type="button" class="btn bgColor btn-sm btnVer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ver imagenes">
                   <i class="fas fa-solid fa-eye"></i>
                 </button>
                 <div class="d-none">
-                  <ul id="images">
+                  <ul class="images">
                     @foreach($congreso->img as $img)
-                      <li style="list-style: none"><img src="{{ $img }}" alt=""></li>
+                      <li style="list-style: none"><img src="{{ asset($img) }}" alt=""></li>
                     @endforeach
                   </ul>
                 </div>
@@ -106,6 +106,18 @@
     </tbody>
   </table>
   <br><br>
+
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="toastPregunta" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+      <div class="toast-body">
+        ¿Deseas recortar la imagen de esta forma?
+        <div class="mt-2 pt-2 border-top">
+          <button type="button" id="btnRecortar" class="btn btn-primary btn-sm">Recortar</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   @include('partials.modals.congresos')
 

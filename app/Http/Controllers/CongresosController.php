@@ -9,6 +9,7 @@ use App\Models\organizaciones;
 use App\Models\presentaciones;
 use App\Models\tipo_presentacion;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class CongresosController extends Controller
 {
@@ -64,7 +65,58 @@ class CongresosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nombre' => ['required', 'string'],
+            'descripcion' => ['required', 'string'],
+            'activo' => ['nullable', 'boolean'],
+            'organizacion' => ['required', 'integer'],
+            'img' => ['nullable'],
+            'img.*' => ['string', 'regex:/^data:image\/(png|jpeg|jpg|gif);base64,/i'], // Ejemplo de reglas para imágenes en base64
+        ]);
+
+        if (!isset($data['activo']) || (isset($data['activo']) && $data['activo'] != 1))
+        {
+            $data['activo'] = 0;
+        }
+
+        $congreso = new congresos();
+
+        if (isset($data['img'][0]))
+        {
+            $urlsPublicas = [];
+            foreach ($data['img'] as $img) {
+                $base64Data = explode(',', $img)[1];
+                $decodedData = base64_decode($base64Data);
+
+                $dataImg = getimagesizefromstring($decodedData);
+
+                // Generar un nombre único basado en la fecha actual
+                $fechaActual = now();
+                $extension = image_type_to_extension($dataImg[2], false); // Obtener la extensión según el tipo de imagen
+                $nombreArchivo = $fechaActual->format('YmdHis') . uniqid() . '.' . $extension;
+                
+                $rutaArchivo = 'public/img/slides/' . $nombreArchivo;
+                // Usando Storage para guardar la imagen en el disco predeterminado
+                Storage::put($rutaArchivo, $decodedData);  
+
+               // Obtener la URL pública del archivo
+                $urlPublica = Storage::url($rutaArchivo);
+
+                $urlsPublicas[] = $urlPublica;
+            }
+            $congreso->img = $urlsPublicas;
+        }
+
+        $congreso->nombre = $data['nombre'];
+        $congreso->descripcion = $data['descripcion'];
+        $congreso->activo = $data['activo'];
+        $congreso->id_organizacion = $data['organizacion'];
+        $congreso->save();
+
+        session()->flash('status', 'Congreso añadido');
+        session()->flash('icon', 'success');
+
+        return to_route('admin.congresos');
     }
 
     /**

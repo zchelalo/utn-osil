@@ -49,7 +49,7 @@
               <div class="mb-3 col-md-12">
                 <label for="" class="form-label">Estado del congreso</label>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="1" id="activo" name="activo">
+                  <input class="form-check-input" type="checkbox" value="{{ old('activo', '') }}" id="activo" name="activo">
                   <label class="form-label" for="activo">
                     Activo
                   </label>
@@ -59,10 +59,10 @@
                 </div>
               </div>
     
-              <div class="mb-3 col-md-12">
-                <input type="text" class="d-none" id="img" name="img[]">
+              <div class="mb-3 col-md-12" id="contenedorInputsImg">
+                {{-- <input type="text" class="d-none" id="img" name="img[]"> --}}
     
-                <label for="imagen" class="form-label">Imagenes</label>
+                <label for="imagen" class="form-label">Imagenes (opcional)</label>
                 <input class="form-control" type="file" id="imagen" name="imagen">
                 @error('imagen')
                   <small class="fw-bold text-danger">{{ $message }}</small>
