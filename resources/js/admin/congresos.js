@@ -55,6 +55,26 @@ document.addEventListener('DOMContentLoaded', async function() {
       const selectedFile = imagen.files[0]
       
       if (selectedFile) {
+        // Validar el tipo de archivo permitido
+        const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+        if (!allowedTypes.includes(selectedFile.type)) {
+
+          Swal.fire({
+            text: "Solo se permiten archivos JPEG, JPG, PNG o GIF",
+            icon: "error",
+            confirmButtonText: 'Cerrar',
+            confirmButtonColor: '#218c74'
+          })
+
+          // Verificar si el input de imagen existe
+          if (imagen) {
+            // Limpiar el valor del input de imagen
+            imagen.value = '';
+          }
+
+          return
+        }
+        
         // Obtener el peso de la imagen en kilobytes
         const pesoEnMegabytes = selectedFile.size / (1024 * 1024)
         if (pesoEnMegabytes > 5)
@@ -92,7 +112,7 @@ document.addEventListener('DOMContentLoaded', async function() {
           minContainerHeight: 50,
           cropend(event) {
             // Obtener el contenido en base64 después de recortar la imagen
-            base64Image = cropperInstance.getCroppedCanvas().toDataURL("image/png")
+            base64Image = cropperInstance.getCroppedCanvas().toDataURL(selectedFile.type)
 
             // Mostrar el toast después de recortar
             toast.show()
