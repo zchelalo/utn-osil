@@ -3,11 +3,11 @@
 @section('title', 'Dashboard UTN Osil')
 
 @section('content_header')
-  <h1>Organizaciones</h1>
+  <h1>Congresos</h1>
 @stop
 
 @section('content')
-  <form class="formEdit" action="{{ route('admin.organizaciones.update', $organizacion) }}" method="post">
+  <form class="formEdit" action="{{ route('admin.congresos.update', $congreso) }}" method="post">
     @csrf
     @method('put')
 
@@ -18,69 +18,74 @@
       <div class="card-body">
 
         <div class="row p-0 m-0">
+
           <div class="mb-3 col-md-6">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre', $organizacion->nombre) }}">
+            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre', $congreso->nombre) }}">
             @error('nombre')
               <small class="fw-bold text-danger">{{ $message }}</small>
             @enderror
           </div>
 
           <div class="mb-3 col-md-6">
-            <label for="pais" class="form-label">País</label>
-            <input type="text" class="form-control" id="pais" name="pais" value="{{ old('pais', $organizacion->direccion['pais']) }}">
-            @error('pais')
+            <label for="descripcion" class="form-label">Descripción</label>
+            <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ old('descripcion', $congreso->descripcion) }}">
+            @error('descripcion')
               <small class="fw-bold text-danger">{{ $message }}</small>
             @enderror
           </div>
-  
+
           <div class="mb-3 col-md-6">
-            <label for="estado" class="form-label">Estado</label>
-            <input type="text" class="form-control" id="estado" name="estado" value="{{ old('estado', $organizacion->direccion['estado']) }}">
-            @error('estado')
+            <label for="organizacion" class="form-label">Organización</label>
+            <select class="form-select" aria-label="Default select example" id="organizacion" name="organizacion">
+              @foreach($organizaciones as $organizacion)
+                <option value="{{ $organizacion->id }}" {{ $organizacion->id == $congreso->id_organizacion ? 'selected' : '' }}>
+                  {{ $organizacion->nombre }}
+                </option>
+              @endforeach
+            </select>
+            @error('organizacion')
               <small class="fw-bold text-danger">{{ $message }}</small>
             @enderror
           </div>
-  
+
           <div class="mb-3 col-md-6">
-            <label for="municipio" class="form-label">Municipio</label>
-            <input type="text" class="form-control" id="municipio" name="municipio" value="{{ old('municipio', $organizacion->direccion['municipio']) }}">
-            @error('municipio')
+            <label for="" class="form-label">Estado del congreso</label>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="1" {{ old('activo', $congreso->descripcion) ? 'checked' : '' }} id="activo" name="activo">
+              <label class="form-label" for="activo">
+                Activo
+              </label>
+              @error('activo')
+                <small class="fw-bold text-danger">{{ $message }}</small>
+              @enderror
+            </div>
+          </div>
+
+          <div class="mb-3 col-md-12" id="contenedorInputsImg">
+            <label for="imagen" class="form-label">Imagenes <small>(opcional)</small></label>
+            <input class="form-control" type="file" id="imagen" name="imagen">
+            <small>Tome en cuenta que el total de peso de las imagenes no debe superar los 20MB</small>
+            @error('imagen')
               <small class="fw-bold text-danger">{{ $message }}</small>
             @enderror
           </div>
-  
-          <div class="mb-3 col-md-6">
-            <label for="colonia" class="form-label">Colonia</label>
-            <input type="text" class="form-control" id="colonia" name="colonia" value="{{ old('colonia', $organizacion->direccion['colonia']) }}">
-            @error('colonia')
-              <small class="fw-bold text-danger">{{ $message }}</small>
-            @enderror
-          </div>
-  
-          <div class="mb-3 col-md-6">
-            <label for="calle" class="form-label">Calle</label>
-            <input type="text" class="form-control" id="calle" name="calle" value="{{ old('calle', $organizacion->direccion['calle']) }}">
-            @error('calle')
-              <small class="fw-bold text-danger">{{ $message }}</small>
-            @enderror
-          </div>
-  
-          <div class="mb-3 col-md-6">
-            <label for="numExt" class="form-label">Número exterior</label>
-            <input type="text" class="form-control" id="numExt" name="numExt" value="{{ old('numExt', $organizacion->direccion['num_ext']) }}">
-            @error('numExt')
-              <small class="fw-bold text-danger">{{ $message }}</small>
-            @enderror
-          </div>
-  
-          <div class="mb-3 col-md-6">
-            <label for="numInt" class="form-label">Número interior</label>
-            <input type="text" class="form-control" id="numInt" name="numInt" value="{{ old('numInt', $organizacion->direccion['num_int']) }}">
-            @error('numInt')
-              <small class="fw-bold text-danger">{{ $message }}</small>
-            @enderror
-          </div>
+
+          @if(isset($congreso->img[0]))
+            <div class="mb-3 col-md-12">
+              <div class="row">
+                @foreach($congreso->img as $img)
+                <div class="contenedorImgCongreso col-sm-6 col-md-4" style="position: relative">
+                  <input type="text" class="d-none imgCongresoBase64" name="img[]">
+                  <img class="w-100 imgCongreso" src="{{ asset($img) }}" alt="">
+                  <button type="button" class="btnImgCongreso btn btn-danger btn-sm">
+                    x
+                  </button>
+                </div>
+              @endforeach
+              </div>
+            </div>
+          @endif
 
           <div class="col-md-12">
             <button type="submit" class="btn btn-primary"><i class="fas fa-solid fa-pen"></i> Editar</button>
@@ -96,7 +101,7 @@
 @section('css')
   @viteReactRefresh
   @vite([
-    "resources/js/admin/organizaciones.js",
+    "resources/js/admin/congresos.js",
     "resources/css/admin/admin.css",
 
     'resources/js/librerias/bootstrap.js',

@@ -73,6 +73,7 @@ class CongresosController extends Controller
             'img' => ['nullable'],
             'img.*' => ['string', 'regex:/^data:image\/(png|jpeg|jpg|gif);base64,/i'], // Ejemplo de reglas para imágenes en base64
         ]);
+        // dd($data['activo']);
 
         if (!isset($data['activo']) || (isset($data['activo']) && $data['activo'] != 1))
         {
@@ -196,16 +197,20 @@ class CongresosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, congresos $congreso)
     {
-        //
+        dd($request);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(congresos $congreso)
     {
-        //
+        $congreso->delete($congreso);
+
+        session()->flash('status', 'Congreso eliminado');
+        session()->flash('icon', 'info');
+        return to_route('admin.congresos');
     }
 }

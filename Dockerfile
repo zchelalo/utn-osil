@@ -1,5 +1,8 @@
 FROM php:8.2 as php
 
+RUN echo "post_max_size = 20M" > /usr/local/etc/php/conf.d/uploads.ini && \
+    echo "upload_max_filesize = 20M" >> /usr/local/etc/php/conf.d/uploads.ini
+
 # Actualiza e instala las dependencias necesarias
 RUN apt-get update -y
 RUN apt-get install -y unzip libpq-dev libcurl4-gnutls-dev

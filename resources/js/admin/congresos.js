@@ -154,4 +154,37 @@ document.addEventListener('DOMContentLoaded', async function() {
       })
     })
   }
+
+  const imgCongresoBase64 = document.querySelectorAll('.imgCongresoBase64')
+
+  if (imgCongresoBase64.length > 0){
+    imgCongresoBase64.forEach((input) => {
+      const imgElement = input.parentElement.querySelector('.imgCongreso')
+  
+      // Convierte la imagen en base64
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      canvas.width = imgElement.width
+      canvas.height = imgElement.height
+      ctx.drawImage(imgElement, 0, 0, imgElement.width, imgElement.height)
+      const imagenBase64 = canvas.toDataURL('image/png')
+  
+      // Asigna el valor al campo oculto
+      input.value = imagenBase64
+    })
+  }
+
+  const btnImgCongresos = document.querySelectorAll('.btnImgCongreso')
+
+  if (btnImgCongresos.length > 0)
+  {
+    btnImgCongresos.forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const contenedorImgCongreso = btn.closest('.contenedorImgCongreso')
+  
+        // Eliminar el contenedor completo al hacer clic en el botón
+        contenedorImgCongreso.remove()
+      })
+    })
+  }
 })

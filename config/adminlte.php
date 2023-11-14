@@ -352,6 +352,13 @@ return [
             'url'  => 'admin/configuracion',
             'icon' => 'fas fa-fw fa-lock',
         ],
+
+        ['header' => 'INICIO'],
+        [
+            'text' => 'Volver a UTN Osil',
+            'url'  => '/',
+            'icon' => 'fas fa-solid fa-house-user',
+        ],
     ],
 
     /*
