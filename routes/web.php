@@ -7,6 +7,7 @@ use App\Http\Controllers\CongresosController;
 use App\Http\Controllers\PresentacionesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrganizacionesController;
+use App\Http\Controllers\FechasController;
 
 // RUTAS DE LA APLICACIÓN
 Route::get('/', [WelcomeController::class, 'index'])->name('inicio');
@@ -36,4 +37,6 @@ Route::middleware(['checkRoles:Administrador'])->prefix('admin')->group(function
   Route::put('/congresos/{congreso}', [CongresosController::class, 'update'])->name('admin.congresos.update');
   Route::post('/congresos', [CongresosController::class, 'store'])->name('admin.congresos.store');
   Route::delete('/congresos/{congreso}', [CongresosController::class, 'destroy'])->name('admin.congresos.destroy');
+
+  Route::get('/horario', [FechasController::class, 'horarioPdf'])->name('admin.horario');
 });
