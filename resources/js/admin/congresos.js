@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         cropperInstance = new Cropper(img, {
           aspectRatio: 16 / 7,
           viewMode: 2,
-          minContainerHeight: 50,
+          background: true,
           cropend(event) {
             // Obtener el contenido en base64 después de recortar la imagen
             base64Image = cropperInstance.getCroppedCanvas().toDataURL(selectedFile.type)
@@ -119,7 +119,6 @@ document.addEventListener('DOMContentLoaded', async function() {
           },
         })
       }
-      
     })
   }
 
@@ -148,6 +147,79 @@ document.addEventListener('DOMContentLoaded', async function() {
         cropperInstance.destroy()
       }
 
+      let imgRecortada = document.getElementById('imgRecortada')
+      // Verificar si el elemento de imagen existe y tiene un padre
+      if (imgRecortada && imgRecortada.parentNode) {
+        // Obtener el nodo padre (elemento contenedor) del elemento de imagen
+        const contenedor = imgRecortada.parentNode
+
+        // Eliminar el elemento de imagen del DOM al llamar al método removeChild en el nodo padre
+        contenedor.removeChild(imgRecortada)
+      }
+
+      // Verificar si el input de imagen existe
+      if (imagen) {
+        // Limpiar el valor del input de imagen
+        imagen.value = '';
+      }
+
+      toast.hide()
+
+      Swal.fire({
+        title: "¡Imagen agregada correctamente!",
+        text: "Si desea agregar otra imagen puede hacerlo",
+        icon: "success",
+        confirmButtonText: 'Cerrar',
+        confirmButtonColor: '#218c74'
+      })
+    })
+  }
+
+  const btnRecortarEdit = document.getElementById('btnRecortarEdit')
+  const rowContenedorImgCongreso = document.getElementById('rowContenedorImgCongreso')
+
+  if (btnRecortarEdit != undefined){
+    btnRecortarEdit.addEventListener('click', (e) => {
+      e.preventDefault()
+
+      let contenedor = document.createElement("div")
+      contenedor.className = "contenedorImgCongreso col-sm-6 col-md-4"
+
+      // Crear el input
+      let input = document.createElement("input")
+      input.type = "text"
+      input.className = "d-none imgCongresoBase64"
+      input.name = "img[]"
+      input.value = base64Image
+
+      // Crear la imagen
+      let imagenEdit = document.createElement("img")
+      imagenEdit.className = "w-100 imgCongreso"
+      imagenEdit.src = base64Image
+
+      // Crear el botón
+      let boton = document.createElement("button")
+      boton.type = "button"
+      boton.className = "btnImgCongreso btn btn-danger btn-sm"
+      boton.innerText = "x"
+      boton.addEventListener("click", function() {
+        // Función para eliminar el contenedor al hacer clic en el botón
+        contenedor.remove()
+      })
+
+      // Agregar los elementos al contenedor
+      contenedor.appendChild(input)
+      contenedor.appendChild(imagenEdit)
+      contenedor.appendChild(boton)
+
+      // Agregar el contenedor al cuerpo del documento
+      rowContenedorImgCongreso.appendChild(contenedor)
+
+      if (cropperInstance) {
+        cropperInstance.destroy()
+      }
+
+      let imgRecortada = document.getElementById('imgRecortada')
       // Verificar si el elemento de imagen existe y tiene un padre
       if (imgRecortada && imgRecortada.parentNode) {
         // Obtener el nodo padre (elemento contenedor) del elemento de imagen

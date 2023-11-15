@@ -199,7 +199,70 @@ class CongresosController extends Controller
      */
     public function update(Request $request, congresos $congreso)
     {
-        dd($request);
+        $data = $request->validate([
+            'nombre' => ['required', 'string'],
+            'descripcion' => ['required', 'string'],
+            'activo' => ['nullable', 'boolean'],
+            'organizacion' => ['required', 'integer'],
+            'img' => ['nullable'],
+            'img.*' => ['string', 'regex:/^data:image\/(png|jpeg|jpg|gif);base64,/i'], // Ejemplo de reglas para imágenes en base64
+        ]);
+        // dd($data['activo']);
+
+        if (!isset($data['activo']) || (isset($data['activo']) && $data['activo'] != 1))
+        {
+            $data['activo'] = 0;
+        }
+
+        $urlsPublicas = [];
+        if (isset($data['img'][0]))
+        {
+            foreach ($data['img'] as $img) {
+                $base64Data = explode(',', $img)[1];
+                $decodedData = base64_decode($base64Data);
+
+                $dataImg = getimagesizefromstring($decodedData);
+
+                // Generar un nombre único basado en la fecha actual
+                $fechaActual = now();
+                $extension = image_type_to_extension($dataImg[2], false); // Obtener la extensión según el tipo de imagen
+                $nombreArchivo = $fechaActual->format('YmdHis') . uniqid() . '.' . $extension;
+                
+                $rutaArchivo = 'public/img/slides/' . $nombreArchivo;
+                // Usando Storage para guardar la imagen en el disco predeterminado
+                Storage::put($rutaArchivo, $decodedData);  
+
+               // Obtener la URL pública del archivo
+                $urlPublica = Storage::url($rutaArchivo);
+
+                $urlsPublicas[] = $urlPublica;
+            }
+        }
+
+        if (count($urlsPublicas) > 0)
+        {
+            $congreso->update([
+                'nombre' => $data['nombre'],
+                'direccion' => $data['descripcion'],
+                'activo' => $data['activo'],
+                'id_organizacion' => $data['organizacion'],
+                'img' => $urlsPublicas
+            ]);
+        }
+        else
+        {
+            $congreso->update([
+                'nombre' => $data['nombre'],
+                'direccion' => $data['descripcion'],
+                'activo' => $data['activo'],
+                'id_organizacion' => $data['organizacion']
+            ]);
+        }
+
+        session()->flash('status', 'Congreso actualizado');
+        session()->flash('icon', 'success');
+
+        return to_route('admin.congresos');
     }
 
     /**

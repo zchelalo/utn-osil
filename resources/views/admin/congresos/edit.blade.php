@@ -62,18 +62,9 @@
             </div>
           </div>
 
-          <div class="mb-3 col-md-12" id="contenedorInputsImg">
-            <label for="imagen" class="form-label">Imagenes <small>(opcional)</small></label>
-            <input class="form-control" type="file" id="imagen" name="imagen">
-            <small>Tome en cuenta que el total de peso de las imagenes no debe superar los 20MB</small>
-            @error('imagen')
-              <small class="fw-bold text-danger">{{ $message }}</small>
-            @enderror
-          </div>
-
           @if(isset($congreso->img[0]))
-            <div class="mb-3 col-md-12">
-              <div class="row">
+            <div class="mb-3 mt-3 col-md-12">
+              <div class="row" id="rowContenedorImgCongreso">
                 @foreach($congreso->img as $img)
                 <div class="contenedorImgCongreso col-sm-6 col-md-4" style="position: relative">
                   <input type="text" class="d-none imgCongresoBase64" name="img[]">
@@ -87,6 +78,19 @@
             </div>
           @endif
 
+          <div class="mb-3 col-md-12" id="contenedorInputsImg">
+            <label for="imagen" class="form-label">Agregar imagenes <small>(opcional)</small></label>
+            <input class="form-control" type="file" id="imagen" name="imagen">
+            <small>Tome en cuenta que el total de peso de las imagenes no debe superar los 20MB</small>
+            @error('imagen')
+              <small class="fw-bold text-danger">{{ $message }}</small>
+            @enderror
+          </div>
+
+          <div class="mb-3 col-md-6 editor p-0">
+
+          </div>
+          
           <div class="col-md-12">
             <button type="submit" class="btn btn-primary"><i class="fas fa-solid fa-pen"></i> Editar</button>
           </div>
@@ -96,6 +100,18 @@
     </div>
 
   </form>
+
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="toastPregunta" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+      <div class="toast-body">
+        ¿Deseas recortar la imagen de esta forma?
+        <div class="mt-2 pt-2 border-top">
+          <button type="button" id="btnRecortarEdit" class="btn btn-primary btn-sm">Recortar</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @stop
 
 @section('css')
@@ -107,4 +123,10 @@
     'resources/js/librerias/bootstrap.js',
     'resources/css/librerias/bootstrap.css'
   ])
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" integrity="sha512-hvNR0F/e2J7zPPfLC9auFe3/SE0yG4aJCOd/qxew74NN7eyiSKjr7xJJMu1Jy2wf7FXITpWS1E/RY8yzuXN7VA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+@stop
+
+@section('js')
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js" integrity="sha512-9KkIqdfN7ipEW6B6k+Aq20PV31bjODg4AA52W+tYtAE0jE0kMx49bjJ3FgvS56wzmyfMUHbQ4Km2b7l9+Y/+Eg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @stop
