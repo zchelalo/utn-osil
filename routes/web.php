@@ -22,6 +22,8 @@ Route::post('/login', [AuthController::class, 'store'])->name('auth.store')->mid
 Route::post('/register', [AuthController::class, 'storeUsuario'])->name('auth.store-user')->middleware('guest');
 Route::post('/logout', [AuthController::class, 'destroy'])->name('logout')->middleware('checkRoles:Administrador,Presentador,Invitado');
 
+Route::get('/horario/{id}', [FechasController::class, 'horarioPdf'])->name('horario');
+
 // RUTAS DEL DASHBOARD
 Route::middleware(['checkRoles:Administrador'])->prefix('admin')->group(function () {
   Route::get('/', [WelcomeController::class, 'indexAdmin'])->name('admin');
@@ -37,6 +39,4 @@ Route::middleware(['checkRoles:Administrador'])->prefix('admin')->group(function
   Route::put('/congresos/{congreso}', [CongresosController::class, 'update'])->name('admin.congresos.update');
   Route::post('/congresos', [CongresosController::class, 'store'])->name('admin.congresos.store');
   Route::delete('/congresos/{congreso}', [CongresosController::class, 'destroy'])->name('admin.congresos.destroy');
-
-  Route::get('/horario', [FechasController::class, 'horarioPdf'])->name('admin.horario');
 });

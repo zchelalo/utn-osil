@@ -8,19 +8,25 @@
   <title>{{ $congreso->nombre }}</title>
 
   <style>
+    * {
+      /* font-family: 'Courier New', Courier, monospace; */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+    }
+
     .table {
       width: 100%;
     }
   </style>
 </head>
 <body> 
-  <h1>{{ $congreso->nombre }}</h1>
+  <h1 style="width: 100%; text-align: center;">{{ $congreso->nombre }}</h1>
   <table class="table">
     <thead>
       <tr>
         <th scope="col" style="width: 20%; padding: 10px; background-color: #485460; color: #fff;">Día</th>
-        <th scope="col" style="width: 20%; padding: 10px; background-color: #485460; color: #fff;">Hora de inicio</th>
-        <th scope="col" style="width: 10%; padding: 10px; background-color: #485460; color: #fff;">Hora de finalización</th>
+        <th scope="col" style="width: 15%; padding: 10px; background-color: #485460; color: #fff;">Hora de inicio</th>
+        <th scope="col" style="width: 15%; padding: 10px; background-color: #485460; color: #fff;">Hora de finalización</th>
         <th scope="col" style="width: 50%; padding: 10px; background-color: #485460; color: #fff;">Presentación</th>
       </tr>
     </thead>
@@ -33,19 +39,32 @@
           }
         @endphp
 
+        @php
+          $filas = 1;
+        @endphp
         @foreach($fecha as $presentaciones)
           
           @if($loop->first)
+            @php
+              $contadorPresentaciones = 1;
+            @endphp
             @foreach($presentaciones as $presentacion)
-              <tr style="{{ $loop->iteration % 2 == 0 ? 'background-color: #10ac84; color: #fff;' : 'background-color: #20bf6b; color: #fff;' }}">
+              <tr style="{{ $filas % 2 == 0 ? 'background-color: #10ac84; color: #fff;' : 'background-color: #218c74; color: #fff;' }}">
+                @php
+                  $filas++;
+                @endphp
                 
                 @if(count($presentaciones) > 1)
                   @if($loop->first)
                     <td style="padding: 10px; background-color: #ff793f; color: #fff" rowspan="{{ $presentacionesDelDia }}">{{ $presentacion->dia }}</td>
-                    <td style="padding: 10px;" rowspan="{{ count($presentaciones) }}">{{ $presentacion->inicio }}</td>
-                    <td style="padding: 10px;" rowspan="{{ count($presentaciones) }}">{{ $presentacion->fin }}</td>
+                    <td style="padding: 10px; {{ $contadorPresentaciones % 2 == 0 ? 'background-color: #ff6b6b;' : 'background-color: #ee5253;' }}" rowspan="{{ count($presentaciones) }}">{{ $presentacion->inicio }}</td>
+                    <td style="padding: 10px; {{ $contadorPresentaciones % 2 == 0 ? 'background-color: #ff6b6b;' : 'background-color: #ee5253;' }}" rowspan="{{ count($presentaciones) }}">{{ $presentacion->fin }}</td>
                   @endif
-                  <td style="padding: 10px;">{{ $presentacion->presentaciones->nombre }}</td>
+
+                  <td style="padding: 10px; {{ $contadorPresentaciones % 2 == 0 ? 'background-color: #ff6b6b;' : 'background-color: #ee5253;' }}">{{ $presentacion->presentaciones->nombre }}</td>
+                  @php
+                    $contadorPresentaciones++;
+                  @endphp
                 @else
                   @if($loop->first)
                     <td style="padding: 10px; background-color: #ff793f; color: #fff" rowspan="{{ $presentacionesDelDia }}">{{ $presentacion->dia }}</td>
@@ -58,14 +77,25 @@
               </tr>
             @endforeach
           @else
+            @php
+              $contadorPresentaciones = 1;
+            @endphp
             @foreach($presentaciones as $presentacion)
-              <tr style="{{ $loop->iteration % 2 == 0 ? 'background-color: #10ac84; color: #fff;' : 'background-color: #20bf6b; color: #fff;' }}">
+              <tr style="{{ $filas % 2 == 0 ? 'background-color: #10ac84; color: #fff;' : 'background-color: #218c74; color: #fff;' }}">
+                @php
+                  $filas++;
+                @endphp
+
                 @if(count($presentaciones) > 1)
                   @if($loop->first)
-                    <td style="padding: 10px;" rowspan="{{ count($presentaciones) }}">{{ $presentacion->inicio }}</td>
-                    <td style="padding: 10px;" rowspan="{{ count($presentaciones) }}">{{ $presentacion->fin }}</td>
+                    <td style="padding: 10px; {{ $contadorPresentaciones % 2 == 0 ? 'background-color: #ff6b6b;' : 'background-color: #ee5253;' }}" rowspan="{{ count($presentaciones) }}">{{ $presentacion->inicio }}</td>
+                    <td style="padding: 10px; {{ $contadorPresentaciones % 2 == 0 ? 'background-color: #ff6b6b;' : 'background-color: #ee5253;' }}" rowspan="{{ count($presentaciones) }}">{{ $presentacion->fin }}</td>
                   @endif
-                  <td style="padding: 10px;">{{ $presentacion->presentaciones->nombre }}</td>
+
+                  <td style="padding: 10px; {{ $contadorPresentaciones % 2 == 0 ? 'background-color: #ff6b6b;' : 'background-color: #ee5253;' }}">{{ $presentacion->presentaciones->nombre }}</td>
+                  @php
+                    $contadorPresentaciones++;
+                  @endphp
                 @else
                   <td style="padding: 10px;">{{ $presentacion->inicio }}</td>
                   <td style="padding: 10px;">{{ $presentacion->fin }}</td>

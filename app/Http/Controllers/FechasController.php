@@ -18,12 +18,12 @@ class FechasController extends Controller
         //
     }
 
-    public function horarioPdf()
+    public function horarioPdf(int $id)
     {
-        $congreso = congresos::find(1);
+        $congreso = congresos::find($id);
 
         $fechas = fechas::with(['presentaciones'])
-            ->where('id_congreso', 1)
+            ->where('id_congreso', $id)
             ->orderBy('dia', 'asc')
             ->orderBy('inicio', 'asc')
             ->get();
@@ -52,7 +52,8 @@ class FechasController extends Controller
         // dd($fechasAgrupadas);
 
         $pdf = Pdf::loadView('pdf_layouts.horario', ['fechas' => $fechasAgrupadas, 'congreso' => $congreso]);
-        return $pdf->stream();
+        return $pdf->download('horario.pdf');
+        // return $pdf->stream();
     }
 
     /**

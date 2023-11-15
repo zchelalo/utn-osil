@@ -42,15 +42,7 @@
           <div class="col-md-6 mb-2 p-1">
             <div class="card">
               <div class="card-body">
-                <span>Horario: <a href="#">Descargar</a></span>
-              </div>
-            </div>
-          </div>
-        @else
-          <div class="col-md-12 mb-2 p-1">
-            <div class="card">
-              <div class="card-body">
-                <span>Horario: <a href="#">Descargar</a></span>
+                <span>Horario: <a href="{{ route('horario', $congreso->id) }}">Descargar</a></span>
               </div>
             </div>
           </div>
