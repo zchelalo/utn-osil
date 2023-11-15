@@ -20,6 +20,9 @@ class FechasController extends Controller
 
     public function horarioPdf(int $id)
     {
+        // Establece la configuración regional en español
+        Carbon::setLocale('es');
+
         $congreso = congresos::find($id);
 
         $fechas = fechas::with(['presentaciones'])
@@ -27,6 +30,14 @@ class FechasController extends Controller
             ->orderBy('dia', 'asc')
             ->orderBy('inicio', 'asc')
             ->get();
+
+        foreach ($fechas as $fecha) {
+            $dia = Carbon::parse($fecha->dia)->dayName;
+            $fecha->dia = ucfirst($dia . ' ' . Carbon::parse($fecha->dia)->format('d-m-Y'));
+
+            $fecha->inicio = Carbon::parse($fecha->inicio)->format('H:i');
+            $fecha->fin = Carbon::parse($fecha->fin)->format('H:i');
+        }
 
         $fechasAgrupadas = $fechas->groupBy('dia')->all();
         foreach ($fechasAgrupadas as $clave => $fecha) {

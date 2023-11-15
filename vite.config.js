@@ -21,6 +21,10 @@ export default defineConfig({
 
                 "resources/js/congresos.js",
                 "resources/js/presentaciones.js",
+                
+                "resources/js/admin/congresos.js",
+                "resources/js/admin/organizaciones.js",
+                "resources/js/admin/tipo_presentaciones.js",
 
                 "resources/js/librerias/swiper.js",
                 // "resources/js/librerias/sweetalert2.js",

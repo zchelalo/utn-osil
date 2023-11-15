@@ -316,7 +316,7 @@ return [
         [
             'text' => 'Congresos',
             'url'  => 'admin/congresos',
-            'icon' => 'fas fa-regular fa-calendar',
+            'icon' => 'fas fa-solid fa-calendar-day',
         ],
         [
             'text' => 'Tipos de presentación',
@@ -327,6 +327,11 @@ return [
             'text' => 'Presentaciones',
             'url'  => 'admin/presentaciones',
             'icon' => 'fas fa-solid fa-comment-dots',
+        ],
+        [
+            'text' => 'Fechas',
+            'url'  => 'admin/fechas',
+            'icon' => 'fas fa-regular fa-calendar',
         ],
         [
             'text' => 'Usuarios',

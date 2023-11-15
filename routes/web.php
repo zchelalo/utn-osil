@@ -8,6 +8,7 @@ use App\Http\Controllers\PresentacionesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrganizacionesController;
 use App\Http\Controllers\FechasController;
+use App\Http\Controllers\TipoPresentacionesController;
 
 // RUTAS DE LA APLICACIÓN
 Route::get('/', [WelcomeController::class, 'index'])->name('inicio');
@@ -39,4 +40,10 @@ Route::middleware(['checkRoles:Administrador'])->prefix('admin')->group(function
   Route::put('/congresos/{congreso}', [CongresosController::class, 'update'])->name('admin.congresos.update');
   Route::post('/congresos', [CongresosController::class, 'store'])->name('admin.congresos.store');
   Route::delete('/congresos/{congreso}', [CongresosController::class, 'destroy'])->name('admin.congresos.destroy');
+
+  Route::get('/tipos-de-presentacion', [TipoPresentacionesController::class, 'indexAdmin'])->name('admin.tipos');
+  Route::get('/tipos-de-presentacion/{tipo}', [TipoPresentacionesController::class, 'edit'])->name('admin.tipos.edit');
+  Route::put('/tipos-de-presentacion/{tipo}', [TipoPresentacionesController::class, 'update'])->name('admin.tipos.update');
+  Route::post('/tipos-de-presentacion', [TipoPresentacionesController::class, 'store'])->name('admin.tipos.store');
+  Route::delete('/tipos-de-presentacion/{tipo}', [TipoPresentacionesController::class, 'destroy'])->name('admin.tipos.destroy');
 });

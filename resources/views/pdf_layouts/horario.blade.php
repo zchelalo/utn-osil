@@ -24,10 +24,10 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col" style="width: 20%; padding: 10px; background-color: #485460; color: #fff;">Día</th>
-        <th scope="col" style="width: 15%; padding: 10px; background-color: #485460; color: #fff;">Hora de inicio</th>
-        <th scope="col" style="width: 15%; padding: 10px; background-color: #485460; color: #fff;">Hora de finalización</th>
-        <th scope="col" style="width: 50%; padding: 10px; background-color: #485460; color: #fff;">Presentación</th>
+        <th scope="col" style="width: 30% !important; padding: 10px; background-color: #485460; color: #fff;">Día</th>
+        <th scope="col" style="width: 15% !important; padding: 10px; background-color: #485460; color: #fff;">Hora de inicio</th>
+        <th scope="col" style="width: 10% !important; padding: 10px; background-color: #485460; color: #fff;">Hora de finalización</th>
+        <th scope="col" style="width: 50% !important; padding: 10px; background-color: #485460; color: #fff;">Presentación</th>
       </tr>
     </thead>
     <tbody>
