@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\organizaciones;
+use App\Models\congresos;
+use App\Models\presentaciones;
+use App\Models\fechas;
 
 class OrganizacionesController extends Controller
 {
@@ -112,6 +115,21 @@ class OrganizacionesController extends Controller
      */
     public function destroy(organizaciones $organizacion)
     {
+        $congresos = congresos::where('id_organizacion', $organizacion->id)->get();
+        foreach ($congresos as $congreso) {
+            $presentaciones = presentaciones::where('id_congreso', $congreso->id)->get();
+            foreach ($presentaciones as $presentacion) {
+                $fechas = fechas::where('id_presentacion', $presentacion->id)->get();
+                foreach ($fechas as $fecha) {
+                    $fecha->delete($fecha);
+                }
+
+                $presentacion->delete($presentacion);
+            }
+
+            $congreso->delete($congreso);
+        }
+
         $organizacion->delete($organizacion);
 
         session()->flash('status', 'Organización eliminada');

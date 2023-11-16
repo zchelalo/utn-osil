@@ -270,6 +270,16 @@ class CongresosController extends Controller
      */
     public function destroy(congresos $congreso)
     {
+        $presentaciones = presentaciones::where('id_congreso', $congreso->id)->get();
+        foreach ($presentaciones as $presentacion) {
+            $fechas = fechas::where('id_presentacion', $presentacion->id)->get();
+            foreach ($fechas as $fecha) {
+                $fecha->delete($fecha);
+            }
+
+            $presentacion->delete($presentacion);
+        }
+
         $congreso->delete($congreso);
 
         session()->flash('status', 'Congreso eliminado');

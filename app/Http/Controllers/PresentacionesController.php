@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\presentaciones;
 use App\Models\tipo_presentacion;
 use App\Models\fechas;
+use App\Models\congresos;
+use App\Models\usuarios;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class PresentacionesController extends Controller
 {
@@ -40,6 +43,15 @@ class PresentacionesController extends Controller
         $tiposPresentacion = tipo_presentacion::get();
 
         return view('presentaciones.index', ['presentaciones' => $presentacionesAgrupadas, 'tipo_presentaciones' => $tiposPresentacion]);
+    }
+
+    public function indexAdmin()
+    {
+        $tipos = tipo_presentacion::get();
+        $congresos = congresos::get();
+        $usuarios = usuarios::get();
+        $presentaciones = presentaciones::with(['tipo_presentacion', 'congresos', 'usuarios'])->get();
+        return view('admin.presentaciones.index', ['presentaciones' => $presentaciones, 'tipos' => $tipos, 'congresos' => $congresos, 'usuarios' => $usuarios]);
     }
 
     public function busqueda(Request $request)
@@ -98,7 +110,78 @@ class PresentacionesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nombre' => ['required', 'string'],
+            'descripcion' => ['required', 'string'],
+            'img' => ['nullable', 'string', 'regex:/^data:image\/(png|jpeg|jpg|gif);base64,/i'],
+            'presentacion' => ['nullable', 'mimes:pdf', 'max:10000'],
+            'tipo' => ['required', 'integer'],
+            'congreso' => ['nullable', 'integer'],
+            'usuario' => ['required', 'integer'],
+        ]);
+
+        $presentacion = new presentaciones();
+
+        if (isset($data['img']))
+        {
+            $urlPublica = null;
+            $base64Data = explode(',', $data['img'])[1];
+            $decodedData = base64_decode($base64Data);
+
+            $dataImg = getimagesizefromstring($decodedData);
+
+            // Generar un nombre único basado en la fecha actual
+            $fechaActual = now();
+            $extension = image_type_to_extension($dataImg[2], false); // Obtener la extensión según el tipo de imagen
+            $nombreArchivo = $fechaActual->format('YmdHis') . uniqid() . '.' . $extension;
+            
+            $rutaArchivo = 'public/img/portadas/' . $nombreArchivo;
+            // Usando Storage para guardar la imagen en el disco predeterminado
+            Storage::put($rutaArchivo, $decodedData);  
+
+            // Obtener la URL pública del archivo
+            $urlPublica = Storage::url($rutaArchivo);
+
+            $presentacion->img = $urlPublica;
+        }
+
+        if (isset($data['presentacion']))
+        {
+            $file = $request->file('presentacion');
+            $name = $file->getClientOriginalName();
+            $fechaActual = now();
+
+            $nombreArchivo = $fechaActual->format('YmdHis') . uniqid() . $name;
+            
+            $rutaArchivo = 'public/pdf/presentaciones/' . $nombreArchivo;
+            $path = Storage::putFileAs(
+                'public/pdf/presentaciones/', $file, $nombreArchivo
+            );
+
+            // Obtener la URL pública del archivo
+            $urlPublica = Storage::url($rutaArchivo);
+
+            $presentacionPdf = ['pdf' => $urlPublica];
+            $presentacion->presentacion = $presentacionPdf;
+        }
+
+        if (isset($data['congreso']))
+        {
+            $presentacion->id_congreso = $data['congreso'];
+        }
+
+
+        $presentacion->nombre = $data['nombre'];
+        $presentacion->descripcion = $data['descripcion'];
+        $presentacion->numero_vistas = 1;
+        $presentacion->id_tipo_presentacion = $data['tipo'];
+        $presentacion->id_usuario = $data['usuario'];
+        $presentacion->save();
+
+        session()->flash('status', 'Presentación añadida');
+        session()->flash('icon', 'success');
+
+        return to_route('admin.presentaciones');
     }
 
     /**
@@ -154,8 +237,17 @@ class PresentacionesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(presentaciones $presentacion)
     {
-        //
+        $fechas = fechas::where('id_presentacion', $presentacion->id)->get();
+        foreach ($fechas as $fecha) {
+            $fecha->delete($fecha);
+        }
+
+        $presentacion->delete($presentacion);
+
+        session()->flash('status', 'Presentación eliminada');
+        session()->flash('icon', 'info');
+        return to_route('admin.presentaciones');
     }
 }

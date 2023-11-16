@@ -46,4 +46,10 @@ Route::middleware(['checkRoles:Administrador'])->prefix('admin')->group(function
   Route::put('/tipos-de-presentacion/{tipo}', [TipoPresentacionesController::class, 'update'])->name('admin.tipos.update');
   Route::post('/tipos-de-presentacion', [TipoPresentacionesController::class, 'store'])->name('admin.tipos.store');
   Route::delete('/tipos-de-presentacion/{tipo}', [TipoPresentacionesController::class, 'destroy'])->name('admin.tipos.destroy');
+
+  Route::get('/presentaciones', [PresentacionesController::class, 'indexAdmin'])->name('admin.presentaciones');
+  Route::get('/presentaciones/{presentacion}', [PresentacionesController::class, 'edit'])->name('admin.presentaciones.edit');
+  Route::put('/presentaciones/{presentacion}', [PresentacionesController::class, 'update'])->name('admin.presentaciones.update');
+  Route::post('/presentaciones', [PresentacionesController::class, 'store'])->name('admin.presentaciones.store');
+  Route::delete('/presentaciones/{presentacion}', [PresentacionesController::class, 'destroy'])->name('admin.presentaciones.destroy');
 });

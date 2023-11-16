@@ -9,17 +9,82 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     btnVer.forEach((ver, index) => {
       const galleryContainer = document.querySelectorAll('.images')[index]
-      const gallery = new Viewer(galleryContainer)
+      const gallery = new Viewer(galleryContainer, {
+        toolbar: {
+          zoomIn: 4,
+          zoomOut: 4,
+          oneToOne: 4,
+          reset: 4,
+          prev: 0,
+          play: {
+            show: 4,
+            size: 'large',
+          },
+          next: 0,
+          rotateLeft: 4,
+          rotateRight: 4,
+          flipHorizontal: 4,
+          flipVertical: 4
+        }
+      })
 
       galleries.push(gallery);
 
       ver.addEventListener('click', (e) => {
         e.preventDefault()
-        
 
         // Mostrar la galería correspondiente al botón clicado
         galleries[index].show();
       })
+    })
+  }
+
+  const presentacion = document.getElementById('presentacion')
+  if (presentacion != undefined){
+    presentacion.addEventListener('change', (e) => {
+      const selectedFile = presentacion.files[0]
+
+      if (selectedFile) {
+        // Validar el tipo de archivo permitido
+        const allowedTypes = ['application/pdf'];
+        if (!allowedTypes.includes(selectedFile.type)) {
+
+          Swal.fire({
+            text: "Solo se permiten archivos PDF",
+            icon: "error",
+            confirmButtonText: 'Cerrar',
+            confirmButtonColor: '#218c74'
+          })
+
+          // Verificar si el input de imagen existe
+          if (presentacion) {
+            // Limpiar el valor del input de imagen
+            presentacion.value = '';
+          }
+
+          return
+        }
+        
+        // Obtener el peso de la imagen en kilobytes
+        const pesoEnMegabytes = selectedFile.size / (1024 * 1024)
+        if (pesoEnMegabytes > 10)
+        {
+          Swal.fire({
+            text: "La presentación no puede pesar mas de 10MB",
+            icon: "error",
+            confirmButtonText: 'Cerrar',
+            confirmButtonColor: '#218c74'
+          })
+
+          // Verificar si el input de imagen existe
+          if (presentacion) {
+            // Limpiar el valor del input de imagen
+            presentacion.value = '';
+          }
+
+          return
+        }
+      }
     })
   }
 
@@ -107,7 +172,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   const btnRecortar = document.getElementById('btnRecortar')
   const contenedorInputsImg = document.getElementById('contenedorInputsImg')
-  let indice = 0
 
   if (btnRecortar != undefined){
     btnRecortar.addEventListener('click', (e) => {
@@ -119,13 +183,11 @@ document.addEventListener('DOMContentLoaded', async function() {
       // Configurar los atributos del elemento input
       inputElement.type = "text"
       inputElement.className = "d-none"
-      inputElement.name = `img[${indice}]`
+      inputElement.name = `img`
       inputElement.value = base64Image
 
       contenedorInputsImg.appendChild(inputElement)
 
-      indice++
-
       if (cropperInstance) {
         cropperInstance.destroy()
       }
@@ -158,114 +220,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     })
   }
 
-  const btnRecortarEdit = document.getElementById('btnRecortarEdit')
-  const rowContenedorImgCongreso = document.getElementById('rowContenedorImgCongreso')
+  let tablaPresentaciones = document.getElementById('tablaPresentaciones')
 
-  if (btnRecortarEdit != undefined){
-    btnRecortarEdit.addEventListener('click', (e) => {
-      e.preventDefault()
-
-      let contenedor = document.createElement("div")
-      contenedor.className = "contenedorImgCongreso col-sm-6 col-md-4"
-
-      // Crear el input
-      let input = document.createElement("input")
-      input.type = "text"
-      input.className = "d-none imgCongresoBase64"
-      input.name = "img[]"
-      input.value = base64Image
-
-      // Crear la imagen
-      let imagenEdit = document.createElement("img")
-      imagenEdit.className = "w-100 imgCongreso"
-      imagenEdit.src = base64Image
-
-      // Crear el botón
-      let boton = document.createElement("button")
-      boton.type = "button"
-      boton.className = "btnImgCongreso btn btn-danger btn-sm"
-      boton.innerText = "x"
-      boton.addEventListener("click", function() {
-        // Función para eliminar el contenedor al hacer clic en el botón
-        contenedor.remove()
-      })
-
-      // Agregar los elementos al contenedor
-      contenedor.appendChild(input)
-      contenedor.appendChild(imagenEdit)
-      contenedor.appendChild(boton)
-
-      // Agregar el contenedor al cuerpo del documento
-      rowContenedorImgCongreso.appendChild(contenedor)
-
-      if (cropperInstance) {
-        cropperInstance.destroy()
-      }
-
-      let imgRecortada = document.getElementById('imgRecortada')
-      // Verificar si el elemento de imagen existe y tiene un padre
-      if (imgRecortada && imgRecortada.parentNode) {
-        // Obtener el nodo padre (elemento contenedor) del elemento de imagen
-        const contenedor = imgRecortada.parentNode
-
-        // Eliminar el elemento de imagen del DOM al llamar al método removeChild en el nodo padre
-        contenedor.removeChild(imgRecortada)
-      }
-
-      // Verificar si el input de imagen existe
-      if (imagen) {
-        // Limpiar el valor del input de imagen
-        imagen.value = '';
-      }
-
-      toast.hide()
-
-      Swal.fire({
-        title: "¡Imagen agregada correctamente!",
-        text: "Si desea agregar otra imagen puede hacerlo",
-        icon: "success",
-        confirmButtonText: 'Cerrar',
-        confirmButtonColor: '#218c74'
-      })
-    })
-  }
-
-  const imgCongresoBase64 = document.querySelectorAll('.imgCongresoBase64')
-
-  if (imgCongresoBase64.length > 0){
-    imgCongresoBase64.forEach((input) => {
-      const imgElement = input.parentElement.querySelector('.imgCongreso')
-  
-      // Convierte la imagen en base64
-      const canvas = document.createElement('canvas')
-      const ctx = canvas.getContext('2d')
-      canvas.width = imgElement.width
-      canvas.height = imgElement.height
-      ctx.drawImage(imgElement, 0, 0, imgElement.width, imgElement.height)
-      const imagenBase64 = canvas.toDataURL('image/png')
-  
-      // Asigna el valor al campo oculto
-      input.value = imagenBase64
-    })
-  }
-
-  const btnImgCongresos = document.querySelectorAll('.btnImgCongreso')
-
-  if (btnImgCongresos.length > 0)
-  {
-    btnImgCongresos.forEach((btn) => {
-      btn.addEventListener('click', function () {
-        const contenedorImgCongreso = btn.closest('.contenedorImgCongreso')
-  
-        // Eliminar el contenedor completo al hacer clic en el botón
-        contenedorImgCongreso.remove()
-      })
-    })
-  }
-
-  let tablaCongresos = document.getElementById('tablaCongresos')
-
-  new DataTable(tablaCongresos, {
+  new DataTable(tablaPresentaciones, {
     scrollX: true,
     language: {
       "search": "Buscar",
