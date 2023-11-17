@@ -220,6 +220,29 @@ document.addEventListener('DOMContentLoaded', async function() {
     })
   }
 
+  const btnQuitarPresentacion = document.getElementById('btnQuitarPresentacion')
+
+  if (btnQuitarPresentacion != undefined){
+    btnQuitarPresentacion.addEventListener('click', (e) => {
+      e.preventDefault()
+
+      Swal.fire({
+        text: "¿Seguro que quiere eliminar la presentación?",
+        icon: "info",
+        confirmButtonText: 'Eliminar',
+        confirmButtonColor: '#e74c3c',
+        showDenyButton: true,
+        denyButtonText: `No eliminar`,
+        denyButtonColor: '#218c74'
+      }).then((result) => {
+        if (result.isConfirmed){
+
+          document.getElementById('eliminarRuta').click()
+        }
+      })
+    })
+  }
+
   let tablaPresentaciones = document.getElementById('tablaPresentaciones')
 
   new DataTable(tablaPresentaciones, {

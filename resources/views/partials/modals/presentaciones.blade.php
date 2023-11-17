@@ -23,7 +23,7 @@
 
           <div class="mb-3 col-md-12">
             <label for="descripcion" class="form-label">Descripción</label>
-            <textarea style="resize: none;" rows="3" class="form-control" id="descripcion" name="descripcion" value="{{ old('descripcion', '') }}"></textarea>
+            <textarea style="resize: none;" rows="3" class="form-control" id="descripcion" name="descripcion">{{ old('descripcion', '') }}</textarea>
             @error('descripcion')
               <small class="fw-bold text-danger">{{ $message }}</small>
             @enderror
@@ -55,6 +55,9 @@
           <div class="mb-3 col-md-6">
             <label for="congreso" class="form-label">Congreso</label>
             <select class="form-select" aria-label="Default select example" id="congreso" name="congreso">
+              <option value="0" {{ old('congreso') == null ? 'selected' : '' }}>
+                Sin congreso
+              </option>
               @foreach($congresos as $congreso)
                 <option value="{{ $congreso->id }}" {{ old('congreso') == $congreso->id ? 'selected' : '' }}>
                   {{ $congreso->nombre }}

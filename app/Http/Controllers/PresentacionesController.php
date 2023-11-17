@@ -165,11 +165,14 @@ class PresentacionesController extends Controller
             $presentacion->presentacion = $presentacionPdf;
         }
 
-        if (isset($data['congreso']))
+        if (isset($data['congreso']) && $data['congreso'] != 0)
         {
             $presentacion->id_congreso = $data['congreso'];
         }
-
+        else if($data['congreso'] == 0)
+        {
+            $presentacion->id_congreso = null;
+        }
 
         $presentacion->nombre = $data['nombre'];
         $presentacion->descripcion = $data['descripcion'];
@@ -221,17 +224,106 @@ class PresentacionesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(presentaciones $presentacion)
     {
-        //
+        $tipos = tipo_presentacion::get();
+        $congresos = congresos::get();
+        $usuarios = usuarios::get();
+        return view('admin.presentaciones.edit', ['presentacion' => $presentacion, 'tipos' => $tipos, 'congresos' => $congresos, 'usuarios' => $usuarios]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, presentaciones $presentacion)
     {
-        //
+        $data = $request->validate([
+            'nombre' => ['required', 'string'],
+            'descripcion' => ['required', 'string'],
+            'img' => ['nullable', 'string', 'regex:/^data:image\/(png|jpeg|jpg|gif);base64,/i'],
+            'presentacion' => ['nullable', 'mimes:pdf', 'max:10000'],
+            'tipo' => ['required', 'integer'],
+            'congreso' => ['nullable', 'integer'],
+            'usuario' => ['required', 'integer'],
+        ]);
+
+        $imagen = null;
+        if (isset($data['img']))
+        {
+            $urlPublica = null;
+            $base64Data = explode(',', $data['img'])[1];
+            $decodedData = base64_decode($base64Data);
+
+            $dataImg = getimagesizefromstring($decodedData);
+
+            // Generar un nombre único basado en la fecha actual
+            $fechaActual = now();
+            $extension = image_type_to_extension($dataImg[2], false); // Obtener la extensión según el tipo de imagen
+            $nombreArchivo = $fechaActual->format('YmdHis') . uniqid() . '.' . $extension;
+            
+            $rutaArchivo = 'public/img/portadas/' . $nombreArchivo;
+            // Usando Storage para guardar la imagen en el disco predeterminado
+            Storage::put($rutaArchivo, $decodedData);  
+
+            // Obtener la URL pública del archivo
+            $urlPublica = Storage::url($rutaArchivo);
+
+            $imagen = $urlPublica;
+        }
+
+        $presentacionBd = null;
+        if (isset($data['presentacion']))
+        {
+            $file = $request->file('presentacion');
+            $name = $file->getClientOriginalName();
+            $fechaActual = now();
+
+            $nombreArchivo = $fechaActual->format('YmdHis') . uniqid() . $name;
+            
+            $rutaArchivo = 'public/pdf/presentaciones/' . $nombreArchivo;
+            $path = Storage::putFileAs(
+                'public/pdf/presentaciones/', $file, $nombreArchivo
+            );
+
+            // Obtener la URL pública del archivo
+            $urlPublica = Storage::url($rutaArchivo);
+
+            $presentacionPdf = ['pdf' => $urlPublica];
+            $presentacionBd = $presentacionPdf;
+        }
+
+        $congreso = null;
+        if (isset($data['congreso']) && $data['congreso'] != 0)
+        {
+            $congreso = $data['congreso'];
+        }
+        else if($data['congreso'] == 0)
+        {
+            $congreso = 0;
+        }
+
+        $presentacion->update([
+            'nombre' => $data['nombre'],
+            'descripcion' => $data['descripcion'],
+            'id_tipo_presentacion' => $data['tipo'],
+            'id_usuario' => $data['usuario'],
+            'img' => $imagen != null ? $imagen : $presentacion->img,
+            'presentacion' => $presentacionBd != null ? $presentacionBd : $presentacion->presentacion,
+            'id_congreso' => $congreso == 0 ? null : ($congreso != 0 && $congreso != null ? $congreso : $presentacion->id_congreso)
+        ]);
+
+        session()->flash('status', 'Presentación actualizada');
+        session()->flash('icon', 'success');
+
+        return to_route('admin.presentaciones');
+    }
+
+    public function updatePresentacion(presentaciones $presentacion)
+    {
+        $presentacion->update([
+            'presentacion' => null
+        ]);
+        return to_route('admin.presentaciones.edit', $presentacion);
     }
 
     /**

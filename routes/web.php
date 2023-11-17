@@ -52,4 +52,5 @@ Route::middleware(['checkRoles:Administrador'])->prefix('admin')->group(function
   Route::put('/presentaciones/{presentacion}', [PresentacionesController::class, 'update'])->name('admin.presentaciones.update');
   Route::post('/presentaciones', [PresentacionesController::class, 'store'])->name('admin.presentaciones.store');
   Route::delete('/presentaciones/{presentacion}', [PresentacionesController::class, 'destroy'])->name('admin.presentaciones.destroy');
+  Route::put('/presentaciones/eliminar-presentacion/{presentacion}', [PresentacionesController::class, 'updatePresentacion'])->name('admin.presentaciones.update-presentacion');
 });

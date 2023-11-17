@@ -85,7 +85,7 @@
               {{ $presentacion->tipo_presentacion->nombre }}
             </td>
             <td>
-              {{ $presentacion->congresos->nombre }}
+              {{ isset($presentacion->congresos->nombre) ? $presentacion->congresos->nombre : 'Sin congreso' }}
             </td>
             <td>
               {{ $presentacion->usuarios->nombre }}
