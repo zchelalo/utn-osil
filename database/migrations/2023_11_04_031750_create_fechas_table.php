@@ -18,7 +18,7 @@ return new class extends Migration
             $table->time('fin');
             $table->boolean('activo')->default(true);
             $table->integer('id_presentacion')->foreign('id_presentacion')->references('id')->on('presentaciones');
-            $table->integer('id_congreso')->foreign('id_congreso')->references('id')->on('congresos');
+            $table->integer('id_congreso')->nullable()->foreign('id_congreso')->references('id')->on('congresos');
             $table->timestamps();
         });
     }

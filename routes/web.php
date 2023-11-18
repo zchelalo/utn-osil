@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrganizacionesController;
 use App\Http\Controllers\FechasController;
 use App\Http\Controllers\TipoPresentacionesController;
+use App\Http\Controllers\UsuariosController;
 
 // RUTAS DE LA APLICACIÓN
 Route::get('/', [WelcomeController::class, 'index'])->name('inicio');
@@ -53,4 +54,16 @@ Route::middleware(['checkRoles:Administrador'])->prefix('admin')->group(function
   Route::post('/presentaciones', [PresentacionesController::class, 'store'])->name('admin.presentaciones.store');
   Route::delete('/presentaciones/{presentacion}', [PresentacionesController::class, 'destroy'])->name('admin.presentaciones.destroy');
   Route::put('/presentaciones/eliminar-presentacion/{presentacion}', [PresentacionesController::class, 'updatePresentacion'])->name('admin.presentaciones.update-presentacion');
+
+  Route::get('/fechas', [FechasController::class, 'indexAdmin'])->name('admin.fechas');
+  Route::get('/fechas/{fecha}', [FechasController::class, 'edit'])->name('admin.fechas.edit');
+  Route::put('/fechas/{fecha}', [FechasController::class, 'update'])->name('admin.fechas.update');
+  Route::post('/fechas', [FechasController::class, 'store'])->name('admin.fechas.store');
+  Route::delete('/fechas/{fecha}', [FechasController::class, 'destroy'])->name('admin.fechas.destroy');
+
+  Route::get('/usuarios', [UsuariosController::class, 'indexAdmin'])->name('admin.usuarios');
+  Route::get('/usuarios/{usuario}', [UsuariosController::class, 'edit'])->name('admin.usuarios.edit');
+  Route::put('/usuarios/{usuario}', [UsuariosController::class, 'update'])->name('admin.usuarios.update');
+  Route::post('/usuarios', [UsuariosController::class, 'store'])->name('admin.usuarios.store');
+  Route::delete('/usuarios/{usuario}', [UsuariosController::class, 'destroy'])->name('admin.usuarios.destroy');
 });
