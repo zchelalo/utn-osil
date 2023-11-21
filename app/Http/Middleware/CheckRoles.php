@@ -29,6 +29,8 @@ class CheckRoles
             return $next($request);
         }
 
-        return to_route('inicio')->with('status', 'Acceso no autorizado');
+        session()->flash('status', 'Acceso no autorizado');
+        session()->flash('icon', 'error');
+        return to_route('inicio');
     }
 }

@@ -349,13 +349,8 @@ return [
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
-            'url'  => 'admin/configuracion',
+            'url'  => 'configuracion',
             'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/configuracion',
-            'icon' => 'fas fa-fw fa-lock',
         ],
 
         ['header' => 'INICIO'],

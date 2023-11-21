@@ -26,6 +26,9 @@ Route::post('/logout', [AuthController::class, 'destroy'])->name('logout')->midd
 
 Route::get('/horario/{id}', [FechasController::class, 'horarioPdf'])->name('horario');
 
+Route::get('/configuracion', [UsuariosController::class, 'viewConf'])->name('configuracion')->middleware('checkRoles:Administrador,Presentador,Invitado');
+Route::put('/configuracion/{usuario}', [UsuariosController::class, 'updateConf'])->name('configuracion.update')->middleware('checkRoles:Administrador,Presentador,Invitado');
+
 // RUTAS DEL DASHBOARD
 Route::middleware(['checkRoles:Administrador'])->prefix('admin')->group(function () {
   Route::get('/', [WelcomeController::class, 'indexAdmin'])->name('admin');

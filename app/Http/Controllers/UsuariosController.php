@@ -101,6 +101,38 @@ class UsuariosController extends Controller
         return to_route('admin.usuarios');
     }
 
+    public function viewConf()
+    {
+        $tipos_usuario = tipo_usuario::get();
+        $usuario = auth()->user();
+        
+        return view('admin.configuracion', ['usuario' => $usuario, 'tipos_usuario' => $tipos_usuario]);
+    }
+
+    public function updateConf(Request $request, usuarios $usuario)
+    {
+        $data = $request->validate([
+            'nombre' => ['required', 'string'],
+            'matricula' => ['nullable', 'integer', 'unique:usuarios,matricula,' . $usuario->id],
+            'correo' => ['required', 'string', 'email', 'unique:usuarios,correo,' . $usuario->id],
+            'password' => ['nullable', 'string', Password::defaults()],
+            'tipo_usuario' => ['required', 'integer']
+        ]);
+
+        $usuario->update([
+            'nombre' => $data['nombre'],
+            'matricula' => isset($data['matricula']) ? $data['matricula'] : null,
+            'correo' => $data['correo'],
+            'password' => isset($data['password']) ? Hash::make($data['password']) : $usuario->password,
+            'id_tipo_usuario' => $data['tipo_usuario'],
+        ]);
+
+        session()->flash('status', 'Usuario actualizado');
+        session()->flash('icon', 'success');
+
+        return to_route('configuracion');
+    }
+
     /**
      * Remove the specified resource from storage.
      */
