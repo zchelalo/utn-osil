@@ -25,6 +25,9 @@
           <p>
             {{ $presentaciones[0]->presentaciones->descripcion }}
           </p>
+          <p>
+            Presentación dirigida por: <a href="#">{{ $presentaciones[0]->presentaciones->usuarios->nombre }}</a>
+          </p>
         </div>
         <div class="col-md-6 p-3">
           <img class="w-100 imgFechaPresentacion m-0 p-0" src="{{ isset($presentaciones[0]->presentaciones->img) ? $presentaciones[0]->presentaciones->img : asset('storage/img/img-por-defecto-congresos.jpg') }}" alt="{{ $presentaciones[0]->presentaciones->nombre }}">
