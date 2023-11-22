@@ -112,6 +112,14 @@
                 </div>
               @endif
 
+              @if(session('tipo_usuario') === 'Invitado' || session('tipo_usuario') === 'Presentador')
+                <div class="p-2 col-md-12">
+                  <a href="{{ route('configuracion') }}" class="btn secBgColor w-100">
+                    <i class="fa-solid fa-lock"></i> Configuración
+                  </a>
+                </div>
+              @endif
+
               @if(session()->has('id'))
                 <div class="p-2 col-md-12">
                   <form action="{{ route('logout') }}" method="post">

@@ -73,6 +73,12 @@ class UsuariosController extends Controller
     {
         $tipos_usuario = tipo_usuario::get();
 
+        if (auth()->user()->id == $usuario->id)
+        {
+            // return view('admin.configuracion', ['usuario' => $usuario, 'tipos_usuario' => $tipos_usuario]);
+            return to_route('configuracion', ['usuario' => $usuario, 'tipos_usuario' => $tipos_usuario]);
+        }
+
         return view('admin.usuarios.edit', ['usuario' => $usuario, 'tipos_usuario' => $tipos_usuario]);
     }
 
@@ -105,8 +111,9 @@ class UsuariosController extends Controller
     {
         $tipos_usuario = tipo_usuario::get();
         $usuario = auth()->user();
+        $presentaciones = presentaciones::where('id_usuario', $usuario->id)->get();
         
-        return view('admin.configuracion', ['usuario' => $usuario, 'tipos_usuario' => $tipos_usuario]);
+        return view('admin.configuracion', ['usuario' => $usuario, 'tipos_usuario' => $tipos_usuario, 'presentaciones' => $presentaciones]);
     }
 
     public function updateConf(Request $request, usuarios $usuario)
@@ -116,7 +123,7 @@ class UsuariosController extends Controller
             'matricula' => ['nullable', 'integer', 'unique:usuarios,matricula,' . $usuario->id],
             'correo' => ['required', 'string', 'email', 'unique:usuarios,correo,' . $usuario->id],
             'password' => ['nullable', 'string', Password::defaults()],
-            'tipo_usuario' => ['required', 'integer']
+            // 'tipo_usuario' => ['required', 'integer']
         ]);
 
         $usuario->update([
@@ -124,7 +131,7 @@ class UsuariosController extends Controller
             'matricula' => isset($data['matricula']) ? $data['matricula'] : null,
             'correo' => $data['correo'],
             'password' => isset($data['password']) ? Hash::make($data['password']) : $usuario->password,
-            'id_tipo_usuario' => $data['tipo_usuario'],
+            // 'id_tipo_usuario' => $data['tipo_usuario'],
         ]);
 
         session()->flash('status', 'Usuario actualizado');
@@ -138,6 +145,12 @@ class UsuariosController extends Controller
      */
     public function destroy(usuarios $usuario)
     {
+        if (auth()->user()->id == $usuario->id)
+        {
+            // return view('admin.configuracion', ['usuario' => $usuario, 'tipos_usuario' => $tipos_usuario]);
+            return to_route('admin.usuarios');
+        }
+
         $presentaciones = presentaciones::where('id_usuario', $usuario->id)->get();
         foreach ($presentaciones as $presentacion) {
             $fechas = fechas::where('id_presentacion', $presentacion->id)->get();

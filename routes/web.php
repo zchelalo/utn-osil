@@ -29,6 +29,12 @@ Route::get('/horario/{id}', [FechasController::class, 'horarioPdf'])->name('hora
 Route::get('/configuracion', [UsuariosController::class, 'viewConf'])->name('configuracion')->middleware('checkRoles:Administrador,Presentador,Invitado');
 Route::put('/configuracion/{usuario}', [UsuariosController::class, 'updateConf'])->name('configuracion.update')->middleware('checkRoles:Administrador,Presentador,Invitado');
 
+Route::middleware(['checkRoles:Presentador'])->prefix('modificar')->group(function () {
+  Route::get('/presentacion/{presentacion}', [PresentacionesController::class, 'editPresentador'])->name('presentaciones.edit');
+  Route::put('/presentacion/{presentacion}', [PresentacionesController::class, 'updatePresentador'])->name('presentaciones.update');
+  Route::put('/presentacion/eliminar-presentacion/{presentacion}', [PresentacionesController::class, 'updatePresentacionPresentador'])->name('presentaciones.update-presentacion');
+});
+
 // RUTAS DEL DASHBOARD
 Route::middleware(['checkRoles:Administrador'])->prefix('admin')->group(function () {
   Route::get('/', [WelcomeController::class, 'indexAdmin'])->name('admin');

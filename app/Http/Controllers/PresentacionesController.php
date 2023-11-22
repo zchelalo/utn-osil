@@ -232,6 +232,86 @@ class PresentacionesController extends Controller
         return view('admin.presentaciones.edit', ['presentacion' => $presentacion, 'tipos' => $tipos, 'congresos' => $congresos, 'usuarios' => $usuarios]);
     }
 
+    public function editPresentador(presentaciones $presentacion)
+    {
+        return view('presentaciones.edit', ['presentacion' => $presentacion]);
+    }
+
+    public function updatePresentador(Request $request, presentaciones $presentacion)
+    {
+        $data = $request->validate([
+            'nombre' => ['required', 'string'],
+            'descripcion' => ['required', 'string'],
+            'img' => ['nullable', 'string', 'regex:/^data:image\/(png|jpeg|jpg|gif);base64,/i'],
+            'presentacion' => ['nullable', 'mimes:pdf', 'max:10000'],
+        ]);
+
+        $imagen = null;
+        if (isset($data['img']))
+        {
+            $urlPublica = null;
+            $base64Data = explode(',', $data['img'])[1];
+            $decodedData = base64_decode($base64Data);
+
+            $dataImg = getimagesizefromstring($decodedData);
+
+            // Generar un nombre único basado en la fecha actual
+            $fechaActual = now();
+            $extension = image_type_to_extension($dataImg[2], false); // Obtener la extensión según el tipo de imagen
+            $nombreArchivo = $fechaActual->format('YmdHis') . uniqid() . '.' . $extension;
+            
+            $rutaArchivo = 'public/img/portadas/' . $nombreArchivo;
+            // Usando Storage para guardar la imagen en el disco predeterminado
+            Storage::put($rutaArchivo, $decodedData);  
+
+            // Obtener la URL pública del archivo
+            $urlPublica = Storage::url($rutaArchivo);
+
+            $imagen = $urlPublica;
+        }
+
+        $presentacionBd = null;
+        if (isset($data['presentacion']))
+        {
+            $file = $request->file('presentacion');
+            $name = $file->getClientOriginalName();
+            $fechaActual = now();
+
+            $nombreArchivo = $fechaActual->format('YmdHis') . uniqid() . $name;
+            
+            $rutaArchivo = 'public/pdf/presentaciones/' . $nombreArchivo;
+            $path = Storage::putFileAs(
+                'public/pdf/presentaciones/', $file, $nombreArchivo
+            );
+
+            // Obtener la URL pública del archivo
+            $urlPublica = Storage::url($rutaArchivo);
+
+            $presentacionPdf = ['pdf' => $urlPublica];
+            $presentacionBd = $presentacionPdf;
+        }
+
+        $presentacion->update([
+            'nombre' => $data['nombre'],
+            'descripcion' => $data['descripcion'],
+            'img' => $imagen != null ? $imagen : $presentacion->img,
+            'presentacion' => $presentacionBd != null ? $presentacionBd : $presentacion->presentacion,
+        ]);
+
+        session()->flash('status', 'Presentación actualizada');
+        session()->flash('icon', 'success');
+
+        return to_route('configuracion', $presentacion);
+    }
+
+    public function updatePresentacionPresentador(presentaciones $presentacion)
+    {
+        $presentacion->update([
+            'presentacion' => null
+        ]);
+        return to_route('configuracion', $presentacion);
+    }
+
     /**
      * Update the specified resource in storage.
      */
