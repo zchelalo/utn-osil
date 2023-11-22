@@ -158,8 +158,15 @@
 }
 
 .input-container .input-chatBot:focus {
-  border: 1px solid green !important;
+  /* border-bottom: 1px solid green !important; */
   background: initial; /* Restaura el color de fondo predeterminado si se ha cambiado */
+  outline: none !important;
+}
+
+.input-container .input-chatBot:focus-visible {
+  /* border-bottom: 1px solid green !important; */
+  background: initial !important; /* Restaura el color de fondo predeterminado si se ha cambiado */
+  outline: none !important;
 }
 
 .button-chatBot{
