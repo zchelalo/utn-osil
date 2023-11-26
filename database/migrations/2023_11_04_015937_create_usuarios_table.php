@@ -17,6 +17,7 @@ return new class extends Migration
 			$table->bigInteger('matricula')->nullable()->unsigned()->unique();
 			$table->string('correo', 255)->unique();
 			$table->string('password', 255);
+			$table->string('foto_perfil', 255)->nullable();
 			$table->integer('id_tipo_usuario')->foreign('id_tipo_usuario')->references('id')->on('tipo_usuario');
 			$table->timestamps();
 		});

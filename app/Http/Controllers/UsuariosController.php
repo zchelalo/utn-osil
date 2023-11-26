@@ -61,9 +61,9 @@ class UsuariosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(usuarios $usuario)
     {
-        //
+        return view('usuarios.index', ['usuario' => $usuario]);
     }
 
     /**

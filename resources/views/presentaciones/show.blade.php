@@ -26,7 +26,7 @@
             {{ $presentaciones[0]->presentaciones->descripcion }}
           </p>
           <p>
-            Presentación dirigida por: <a href="#">{{ $presentaciones[0]->presentaciones->usuarios->nombre }}</a>
+            Presentación dirigida por: <a href="{{ route('usuarios', $presentaciones[0]->presentaciones->usuarios) }}">{{ $presentaciones[0]->presentaciones->usuarios->nombre }}</a>
           </p>
         </div>
         <div class="col-md-6 p-3">
