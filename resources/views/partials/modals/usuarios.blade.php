@@ -44,7 +44,7 @@
             @enderror
           </div>
 
-          <div class="mb-3 col-md-6">
+          <div class="mb-3 col-md-12">
             <label for="tipo_usuario" class="form-label">Tipo de usuario</label>
             <select class="form-select" aria-label="Default select example" id="tipo_usuario" name="tipo_usuario">
               @foreach($tipos_usuario as $tipo_usuario)
@@ -56,6 +56,56 @@
             @error('tipo_usuario')
               <small class="fw-bold text-danger">{{ $message }}</small>
             @enderror
+          </div>
+
+          <div class="mb-3 col-md-12">
+            <div class="row">
+              <div class="mb-3 col-sm-6 col-md-3">
+                <label for="fb" class="form-label">Facebook <small>(opcional)</small></label>
+                <input type="text" class="form-control" id="fb" name="fb" value="{{ old('fb', '') }}">
+                @error('fb')
+                  <small class="fw-bold text-danger">{{ $message }}</small>
+                @enderror
+              </div>
+
+              <div class="mb-3 col-sm-6 col-md-3">
+                <label for="tw" class="form-label">Twitter/X <small>(opcional)</small></label>
+                <input type="text" class="form-control" id="tw" name="tw" value="{{ old('tw', '') }}">
+                @error('tw')
+                  <small class="fw-bold text-danger">{{ $message }}</small>
+                @enderror
+              </div>
+
+              <div class="mb-3 col-sm-6 col-md-3">
+                <label for="ig" class="form-label">Instagram <small>(opcional)</small></label>
+                <input type="text" class="form-control" id="ig" name="ig" value="{{ old('ig', '') }}">
+                @error('ig')
+                  <small class="fw-bold text-danger">{{ $message }}</small>
+                @enderror
+              </div>
+
+              <div class="mb-3 col-sm-6 col-md-3">
+                <label for="tk" class="form-label">Tiktok <small>(opcional)</small></label>
+                <input type="text" class="form-control" id="tk" name="tk" value="{{ old('tk', '') }}">
+                @error('tk')
+                  <small class="fw-bold text-danger">{{ $message }}</small>
+                @enderror
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 col-md-12" id="contenedorInputsImg">
+            {{-- <input type="text" class="d-none" id="img" name="img[]"> --}}
+
+            <label for="imagen" class="form-label">Foto de perfil <small>(opcional)</small></label>
+            <input class="form-control" type="file" id="imagen" name="imagen">
+            @error('imagen')
+              <small class="fw-bold text-danger">{{ $message }}</small>
+            @enderror
+          </div>
+
+          <div class="col-md-12 editor p-0">
+
           </div>
 
         </div>

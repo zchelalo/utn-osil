@@ -42,6 +42,8 @@
         <th scope="col">Nombre</th>
         <th scope="col">Matrícula</th>
         <th scope="col">Correo</th>
+        <th scope="col">Foto de perfil</th>
+        <th scope="col">Redes sociales</th>
         <th scope="col">Tipo de usuario</th>
         <th scope="col">Acciones</th>
       </tr>
@@ -61,6 +63,46 @@
             </td>
             <td>
               {{ $usuario->correo }}
+            </td>
+            <td>
+              @if(isset($usuario->foto_perfil))
+                <img style="cursor: pointer;" class="btnVer imgPerfilUsuarios" src="{{ $usuario->foto_perfil }}">
+                <div class="d-none">
+                  <ul class="images">
+                    <li style="list-style: none"><img src="{{ asset($usuario->foto_perfil) }}" alt=""></li>
+                  </ul>
+                </div>
+              @else
+                Sin imagenes
+              @endif
+            </td>
+            <td>
+              @if(isset($usuario->redes_sociales))
+                <div>
+                  @if(isset($usuario->redes_sociales['fb']))
+                    <a target="_blank" class="p-1" style="color: #222f3e" href="{{ $usuario->redes_sociales['fb'] }}">
+                      <i class="fs-5 fa-brands fa-facebook"></i>
+                    </a>
+                  @endif
+                  @if(isset($usuario->redes_sociales['tw']))
+                    <a target="_blank" class="p-1" style="color: #222f3e" href="{{ $usuario->redes_sociales['tw'] }}">
+                      <i class="fs-5 fa-brands fa-twitter"></i>
+                    </a>
+                  @endif
+                  @if(isset($usuario->redes_sociales['ig']))
+                    <a target="_blank" class="p-1" style="color: #222f3e" href="{{ $usuario->redes_sociales['ig'] }}">
+                      <i class="fs-5 fa-brands fa-instagram"></i>
+                    </a>
+                  @endif
+                  @if(isset($usuario->redes_sociales['tk']))
+                    <a target="_blank" class="p-1" style="color: #222f3e" href="{{ $usuario->redes_sociales['tk'] }}">
+                      <i class="fs-5 fa-brands fa-tiktok"></i>
+                    </a>
+                  @endif
+                </div>
+              @else
+                Sin redes sociales
+              @endif
             </td>
             <td>
               {{ $usuario->tipo_usuario->nombre }}
@@ -86,6 +128,18 @@
   </table>
   <br><br>
 
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="toastPregunta" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+      <div class="toast-body">
+        ¿Deseas recortar la imagen de esta forma?
+        <div class="mt-2 pt-2 border-top">
+          <button type="button" id="btnRecortar" class="btn btn-primary btn-sm">Recortar</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   @include('partials.modals.usuarios')
 
   {{-- <input type="hidden" id="urlHost" name="urlHost" value="{{ url('/')}}"> --}}
@@ -100,8 +154,18 @@
     'resources/js/librerias/bootstrap.js',
     'resources/css/librerias/bootstrap.css'
   ])
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.css" integrity="sha512-za6IYQz7tR0pzniM/EAkgjV1gf1kWMlVJHBHavKIvsNoUMKWU99ZHzvL6lIobjiE2yKDAKMDSSmcMAxoiWgoWA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" integrity="sha512-hvNR0F/e2J7zPPfLC9auFe3/SE0yG4aJCOd/qxew74NN7eyiSKjr7xJJMu1Jy2wf7FXITpWS1E/RY8yzuXN7VA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @stop
 
-{{-- @section('js')
-  
-@stop --}}
+@section('js')
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.js" integrity="sha512-EC3CQ+2OkM+ZKsM1dbFAB6OGEPKRxi6EDRnZW9ys8LghQRAq6cXPUgXCCujmDrXdodGXX9bqaaCRtwj4h4wgSQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.common.min.js" integrity="sha512-Lz/6nSYe4HNv0bbr5OsVaqQCNvWjtowEO2KN82rcoTeJeapLPsxIHiWxx7O8T9+Swf3lxBMfd3rV45W0X4WCsg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.esm.min.js" integrity="sha512-9dr4e1eVAKj75w/m1ukoyDlcrI5JtM5dm2LgbP3HdOqAH+tdw1ylZjYwiX+9FxcLV+UcYIydLwFm28H5HUeiBg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://kit.fontawesome.com/be5e2a9675.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js" integrity="sha512-9KkIqdfN7ipEW6B6k+Aq20PV31bjODg4AA52W+tYtAE0jE0kMx49bjJ3FgvS56wzmyfMUHbQ4Km2b7l9+Y/+Eg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+@stop

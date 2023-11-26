@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -69,11 +70,66 @@ class AuthController extends Controller
             'matricula' => ['nullable', 'integer'],
             'correo' => ['required', 'string', 'email', 'unique:usuarios'],
             'password' => ['required', 'string', Password::defaults()],
+            'fb' => ['nullable', 'string', 'regex:/^(https?:\/\/)?(www\.)?facebook\.com\/.+/i'],
+            'tw' => ['nullable', 'string', 'regex:/^(https?:\/\/)?(www\.)?twitter\.com\/.+/i'],
+            'ig' => ['nullable', 'string', 'regex:/^(https?:\/\/)?(www\.)?instagram\.com\/.+/i'],
+            'tk' => ['nullable', 'string', 'regex:/^(https?:\/\/)?(www\.)?tiktok\.com\/.+/i'],
+            'img' => ['nullable', 'string', 'regex:/^data:image\/(png|jpeg|jpg|gif);base64,/i'],
         ]);
 
         // 'id_tipo_usuario' => ['required', 'integer']
 
         $usuario = new usuarios();
+
+        if (isset($data['img']))
+        {
+            $urlPublica = null;
+            $base64Data = explode(',', $data['img'])[1];
+            $decodedData = base64_decode($base64Data);
+
+            $dataImg = getimagesizefromstring($decodedData);
+
+            // Generar un nombre único basado en la fecha actual
+            $fechaActual = now();
+            $extension = image_type_to_extension($dataImg[2], false); // Obtener la extensión según el tipo de imagen
+            $nombreArchivo = $fechaActual->format('YmdHis') . uniqid() . '.' . $extension;
+            
+            $rutaArchivo = 'public/img/pfp/' . $nombreArchivo;
+            // Usando Storage para guardar la imagen en el disco predeterminado
+            Storage::put($rutaArchivo, $decodedData);  
+
+            // Obtener la URL pública del archivo
+            $urlPublica = Storage::url($rutaArchivo);
+
+            $usuario->foto_perfil = $urlPublica;
+        }
+
+        if (isset($data['fb']) || isset($data['tw']) || isset($data['ig']) || isset($data['tk']))
+        {
+            $redes_sociales = null;
+            if (isset($data['fb']))
+            {
+                $redes_sociales['fb'] = $data['fb'];
+            }
+
+            if (isset($data['tw']))
+            {
+                $redes_sociales['tw'] = $data['tw'];
+            }
+
+            if (isset($data['ig']))
+            {
+                $redes_sociales['ig'] = $data['ig'];
+            }
+
+            if (isset($data['tk']))
+            {
+                $redes_sociales['tk'] = $data['tk'];
+            }
+
+            $usuario->redes_sociales = $redes_sociales;
+        }
+
         $usuario->nombre = $data['nombre'];
         $usuario->matricula = $data['matricula'];
         $usuario->correo = $data['correo'];

@@ -77,6 +77,16 @@ button.secBgColor:hover {
   padding: 0.3rem 0.7rem !important;
 }
 
+.imgPerfilUsuarios {
+  width: 100%;
+}
+
+@media (min-width: 1200px){
+  .imgPerfilUsuarios {
+    width: 50%;
+  }
+}
+
 @media (max-width: 768px){
   .btnAgregar {
     margin-left: 0;

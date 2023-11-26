@@ -21,22 +21,22 @@
       @if(isset($usuario->redes_sociales))
         <div class="mt-3 text-center">
           @if(isset($usuario->redes_sociales['fb']))
-            <a class="p-1" style="color: #222f3e" href="{{ $usuario->redes_sociales['fb'] }}">
+            <a target="_blank" class="p-1" style="color: #222f3e" href="{{ $usuario->redes_sociales['fb'] }}">
               <i class="fs-5 fa-brands fa-facebook"></i>
             </a>
           @endif
           @if(isset($usuario->redes_sociales['tw']))
-            <a class="p-1" style="color: #222f3e" href="{{ $usuario->redes_sociales['tw'] }}">
+            <a target="_blank"class="p-1" style="color: #222f3e" href="{{ $usuario->redes_sociales['tw'] }}">
               <i class="fs-5 fa-brands fa-twitter"></i>
             </a>
           @endif
           @if(isset($usuario->redes_sociales['ig']))
-            <a class="p-1" style="color: #222f3e" href="{{ $usuario->redes_sociales['ig'] }}">
+            <a target="_blank" class="p-1" style="color: #222f3e" href="{{ $usuario->redes_sociales['ig'] }}">
               <i class="fs-5 fa-brands fa-instagram"></i>
             </a>
           @endif
           @if(isset($usuario->redes_sociales['tk']))
-            <a class="p-1" style="color: #222f3e" href="{{ $usuario->redes_sociales['tk'] }}">
+            <a target="_blank" class="p-1" style="color: #222f3e" href="{{ $usuario->redes_sociales['tk'] }}">
               <i class="fs-5 fa-brands fa-tiktok"></i>
             </a>
           @endif
@@ -48,7 +48,7 @@
         {{ $usuario->nombre }}
       </h1>
       <span>
-        <b>Correo:</b> {{ $usuario->correo }}
+        <b>Correo electrónico:</b> {{ $usuario->correo }}
       </span>
       <br>
       <span>
