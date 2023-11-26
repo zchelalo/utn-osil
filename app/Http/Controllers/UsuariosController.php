@@ -63,7 +63,9 @@ class UsuariosController extends Controller
      */
     public function show(usuarios $usuario)
     {
-        return view('usuarios.index', ['usuario' => $usuario]);
+        $presentaciones = presentaciones::where('id_usuario', $usuario->id)->get();
+
+        return view('usuarios.index', ['usuario' => $usuario, 'presentaciones' => $presentaciones]);
     }
 
     /**

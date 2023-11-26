@@ -137,6 +137,10 @@ button.secBgColor:hover {
   background-color: #ccc; /* Cambia el color de fondo al hacer hover */
 }
 
+.imgPerfil {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
 @media (max-width: 768px) {
   .iconoNav {
     width: 17% !important;

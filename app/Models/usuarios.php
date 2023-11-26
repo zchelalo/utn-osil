@@ -20,11 +20,17 @@ class usuarios extends Authenticatable
         'matricula',
         'correo',
         'password',
+        'foto_perfil',
+        'redes_sociales',
         'id_tipo_usuario',
     ];
 
     protected $hidden = [
         'password',
+    ];
+
+    protected $casts = [
+        'redes_sociales' => 'array',
     ];
 
     public function tipo_usuario()
