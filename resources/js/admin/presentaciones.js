@@ -100,6 +100,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     imagen.addEventListener('change', (e) => {
       e.preventDefault()
 
+      if (document.querySelector('.editor') != undefined){
+        document.querySelector('.editor').innerHTML = ''
+      }
+
       const selectedFile = imagen.files[0]
       
       if (selectedFile) {
