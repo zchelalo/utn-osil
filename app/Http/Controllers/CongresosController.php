@@ -174,8 +174,8 @@ class CongresosController extends Controller
             ->orderBy('fin', 'desc')
             ->first('dia');
 
-        $congreso['fecha_inicio'] = Carbon::parse($fechaInicio->dia)->format('d-m-Y');
-        $congreso['fecha_fin'] = Carbon::parse($fechaFin->dia)->format('d-m-Y');
+        if (isset($fechaInicio)) $congreso['fecha_inicio'] = Carbon::parse($fechaInicio->dia)->format('d-m-Y');
+        if (isset($fechaFin)) $congreso['fecha_fin'] = Carbon::parse($fechaFin->dia)->format('d-m-Y');
 
         return view('congresos.show', [
             'congreso' => $congreso,
