@@ -31,6 +31,8 @@ Route::put('/configuracion/{usuario}', [UsuariosController::class, 'updateConf']
 
 Route::get('/perfil/{usuario}', [UsuariosController::class, 'show'])->name('usuarios');
 
+Route::post('/presentacion/taller/inscripcion/{presentacion}', [PresentacionesController::class, 'inscripcion'])->name('inscripcion')->middleware('checkRoles:Invitado');
+
 Route::middleware(['checkRoles:Presentador'])->prefix('modificar')->group(function () {
   Route::get('/presentacion/{presentacion}', [PresentacionesController::class, 'editPresentador'])->name('presentaciones.edit');
   Route::put('/presentacion/{presentacion}', [PresentacionesController::class, 'updatePresentador'])->name('presentaciones.update');

@@ -28,6 +28,12 @@
           <p>
             Presentación dirigida por: <a href="{{ route('usuarios', $presentaciones[0]->presentaciones->usuarios) }}">{{ $presentaciones[0]->presentaciones->usuarios->nombre }}</a>
           </p>
+          @if(session('tipo_usuario') === 'Invitado' && $presentaciones[0]->tipo_presentacion_nombre === 'Taller')
+            <form action="{{ route('inscripcion', $presentaciones[0]->presentaciones) }}" method="post">
+              @csrf
+              <button type="submit" class="btn bgColor">Inscribirse</button>
+            </form>
+          @endif
         </div>
         <div class="col-md-6 p-3">
           <img class="w-100 imgFechaPresentacion m-0 p-0" src="{{ isset($presentaciones[0]->presentaciones->img) ? $presentaciones[0]->presentaciones->img : asset('storage/img/img-por-defecto-congresos.jpg') }}" alt="{{ $presentaciones[0]->presentaciones->nombre }}">

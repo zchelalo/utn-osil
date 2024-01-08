@@ -189,6 +189,11 @@ class PresentacionesController extends Controller
         return to_route('admin.presentaciones');
     }
 
+    public function inscripcion(presentaciones $presentacion)
+    {
+        dd($presentacion);
+    }
+
     /**
      * Display the specified resource.
      */
