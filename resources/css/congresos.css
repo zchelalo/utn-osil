@@ -17,27 +17,14 @@
   z-index: 100;
 }
 
-.contenedorImgCongresos{
-  position: relative;
-}
-
 .imgCongresos {
   height: 100%;
   width: auto !important;
   max-width: none !important;
+  object-fit: cover;
   /* max-height: none !important; */
   overflow: hidden;
-  position: absolute;
 }
-
-/* .imgCongresos {
-  height: auto;
-  width: auto !important;
-  max-height: 160%;
-  max-width: none !important;
-  overflow: hidden;
-  position: absolute;
-} */
 
 .swiper {
   width: 100%;

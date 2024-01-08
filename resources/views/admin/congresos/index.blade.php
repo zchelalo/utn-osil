@@ -42,6 +42,7 @@
         <th scope="col">Nombre</th>
         <th scope="col">Descripción</th>
         <th scope="col">Imagenes</th>
+        <th scope="col">Máximo de ins taller</th>
         <th scope="col">Número de vistas</th>
         <th scope="col">Activo</th>
         <th scope="col">Organización</th>
@@ -76,6 +77,9 @@
               @else
                 Sin imagenes
               @endif
+            </td>
+            <td>
+              {{ $congreso->max_ins_taller }}
             </td>
             <td>
               {{ $congreso->numero_vistas }}

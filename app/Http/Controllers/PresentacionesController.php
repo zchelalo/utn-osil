@@ -115,6 +115,7 @@ class PresentacionesController extends Controller
             'descripcion' => ['required', 'string'],
             'img' => ['nullable', 'string', 'regex:/^data:image\/(png|jpeg|jpg|gif);base64,/i'],
             'presentacion' => ['nullable', 'mimes:pdf', 'max:10000'],
+            'lugar' => ['required', 'string'],
             'tipo' => ['required', 'integer'],
             'congreso' => ['nullable', 'integer'],
             'usuario' => ['required', 'integer'],
@@ -176,6 +177,7 @@ class PresentacionesController extends Controller
 
         $presentacion->nombre = $data['nombre'];
         $presentacion->descripcion = $data['descripcion'];
+        $presentacion->lugar = $data['lugar'];
         $presentacion->numero_vistas = 1;
         $presentacion->id_tipo_presentacion = $data['tipo'];
         $presentacion->id_usuario = $data['usuario'];
@@ -322,6 +324,7 @@ class PresentacionesController extends Controller
             'descripcion' => ['required', 'string'],
             'img' => ['nullable', 'string', 'regex:/^data:image\/(png|jpeg|jpg|gif);base64,/i'],
             'presentacion' => ['nullable', 'mimes:pdf', 'max:10000'],
+            'lugar' => ['required', 'string'],
             'tipo' => ['required', 'integer'],
             'congreso' => ['nullable', 'integer'],
             'usuario' => ['required', 'integer'],
@@ -385,6 +388,7 @@ class PresentacionesController extends Controller
         $presentacion->update([
             'nombre' => $data['nombre'],
             'descripcion' => $data['descripcion'],
+            'lugar' => $data['lugar'],
             'id_tipo_presentacion' => $data['tipo'],
             'id_usuario' => $data['usuario'],
             'img' => $imagen != null ? $imagen : $presentacion->img,

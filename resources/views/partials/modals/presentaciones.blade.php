@@ -13,10 +13,18 @@
         
         <div class="row p-0 m-0">
 
-          <div class="mb-3 col-md-12">
+          <div class="mb-3 col-md-6">
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre', '') }}">
             @error('nombre')
+              <small class="fw-bold text-danger">{{ $message }}</small>
+            @enderror
+          </div>
+
+          <div class="mb-3 col-md-6">
+            <label for="lugar" class="form-label">Lugar</label>
+            <input type="text" class="form-control" id="lugar" name="lugar" value="{{ old('lugar', '') }}">
+            @error('lugar')
               <small class="fw-bold text-danger">{{ $message }}</small>
             @enderror
           </div>

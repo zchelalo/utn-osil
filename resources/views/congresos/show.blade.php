@@ -19,7 +19,7 @@
   <section class="row col-md-12 mt-3 mb-3 d-flex justify-content-center align-items-center">
     <article class="col-md-12">
       <div class="row text-center p-2">
-        <h1>{{ $congreso->nombre }}</h1>
+        <h1>{{ ucfirst($congreso->nombre) }}</h1>
   
         <div class="col-md-12 mb-2 p-1">
           <div class="card">
@@ -47,7 +47,6 @@
             </div>
           </div>
         @endif
-
         
   
         @if(isset($congreso->organizaciones->nombre))

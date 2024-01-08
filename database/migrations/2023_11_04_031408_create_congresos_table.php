@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('descripcion');
             $table->json('img')->nullable();
             $table->integer('numero_vistas')->unsigned()->default(1);
+            $table->integer('max_ins_taller')->unsigned()->default(1);
             $table->boolean('activo')->default(true);
             $table->integer('id_organizacion')->foreign('id_organizacion')->references('id')->on('organizaciones');
             $table->timestamps();

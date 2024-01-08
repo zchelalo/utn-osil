@@ -70,6 +70,7 @@ class CongresosController extends Controller
             'descripcion' => ['required', 'string'],
             'activo' => ['nullable', 'boolean'],
             'organizacion' => ['required', 'integer'],
+            'max_ins_taller' => ['required', 'integer'],
             'img' => ['nullable'],
             'img.*' => ['string', 'regex:/^data:image\/(png|jpeg|jpg|gif);base64,/i'], // Ejemplo de reglas para imágenes en base64
         ]);
@@ -111,6 +112,7 @@ class CongresosController extends Controller
         $congreso->nombre = $data['nombre'];
         $congreso->descripcion = $data['descripcion'];
         $congreso->activo = $data['activo'];
+        $congreso->max_ins_taller = $data['max_ins_taller'];
         $congreso->id_organizacion = $data['organizacion'];
         $congreso->save();
 
@@ -204,6 +206,7 @@ class CongresosController extends Controller
             'descripcion' => ['required', 'string'],
             'activo' => ['nullable', 'boolean'],
             'organizacion' => ['required', 'integer'],
+            'max_ins_taller' => ['required', 'integer'],
             'img' => ['nullable'],
             'img.*' => ['string', 'regex:/^data:image\/(png|jpeg|jpg|gif);base64,/i'], // Ejemplo de reglas para imágenes en base64
         ]);
@@ -245,6 +248,7 @@ class CongresosController extends Controller
                 'nombre' => $data['nombre'],
                 'direccion' => $data['descripcion'],
                 'activo' => $data['activo'],
+                'max_ins_taller' => $data['max_ins_taller'],
                 'id_organizacion' => $data['organizacion'],
                 'img' => $urlsPublicas
             ]);
@@ -255,6 +259,7 @@ class CongresosController extends Controller
                 'nombre' => $data['nombre'],
                 'direccion' => $data['descripcion'],
                 'activo' => $data['activo'],
+                'max_ins_taller' => $data['max_ins_taller'],
                 'id_organizacion' => $data['organizacion']
             ]);
         }

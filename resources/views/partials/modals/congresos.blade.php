@@ -58,6 +58,14 @@
                   @enderror
                 </div>
               </div>
+
+              <div class="mb-3 col-md-12">
+                <label for="max_ins_taller" class="form-label">Máximo de inscripciones para los talleres</label>
+                <input type="text" class="form-control" id="max_ins_taller" name="max_ins_taller" value="{{ old('max_ins_taller', '') }}">
+                @error('max_ins_taller')
+                  <small class="fw-bold text-danger">{{ $message }}</small>
+                @enderror
+              </div>
     
               <div class="mb-3 col-md-12" id="contenedorInputsImg">
                 {{-- <input type="text" class="d-none" id="img" name="img[]"> --}}

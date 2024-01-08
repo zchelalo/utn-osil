@@ -13,7 +13,7 @@
 @section('body')
 
 <div class="container-fluid">
-@if(isset($presentaciones[1]))
+@if(count($presentaciones) > 0)
   <section class="col-md-12 mt-3 text-center">
     <div class="mb-3">
       <h2 class="">Presentaciones</h2>

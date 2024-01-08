@@ -12,6 +12,7 @@ class presentaciones extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'lugar',
         'img',
         'presentacion',
         'id_tipo_presentacion',

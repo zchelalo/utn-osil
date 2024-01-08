@@ -25,10 +25,11 @@
     <thead>
       <tr>
         <th scope="col" style="width: 15% !important; padding: 10px; background-color: #485460; color: #fff;">Día</th>
-        <th scope="col" style="width: 15% !important; padding: 10px; background-color: #485460; color: #fff;">Hora de inicio</th>
-        <th scope="col" style="width: 10% !important; padding: 10px; background-color: #485460; color: #fff;">Hora de finalización</th>
+        <th scope="col" style="width: 5% !important; padding: 10px; background-color: #485460; color: #fff;">Hora de inicio</th>
+        <th scope="col" style="width: 5% !important; padding: 10px; background-color: #485460; color: #fff;">Hora de finalización</th>
         <th scope="col" style="width: 30% !important; padding: 10px; background-color: #485460; color: #fff;">Presentación</th>
-        <th scope="col" style="width: 30% !important; padding: 10px; background-color: #485460; color: #fff;">Presentador</th>
+        <th scope="col" style="width: 20% !important; padding: 10px; background-color: #485460; color: #fff;">Presentador</th>
+        <th scope="col" style="width: 25% !important; padding: 10px; background-color: #485460; color: #fff;">Lugar</th>
       </tr>
     </thead>
     <tbody>
@@ -64,6 +65,7 @@
 
                   <td style="padding: 10px; {{ $contadorPresentaciones % 2 == 0 ? 'background-color: #ff6b6b;' : 'background-color: #ee5253;' }}">{{ $presentacion->presentaciones->nombre }}</td>
                   <td style="padding: 10px; {{ $contadorPresentaciones % 2 == 0 ? 'background-color: #ff6b6b;' : 'background-color: #ee5253;' }}">{{ $presentacion->presentaciones->usuarios->nombre }}</td>
+                  <td style="padding: 10px; {{ $contadorPresentaciones % 2 == 0 ? 'background-color: #ff6b6b;' : 'background-color: #ee5253;' }}">{{ $presentacion->presentaciones->lugar }}</td>
                   @php
                     $contadorPresentaciones++;
                   @endphp
@@ -75,6 +77,7 @@
                   <td style="padding: 10px;">{{ $presentacion->fin }}</td>
                   <td style="padding: 10px;">{{ $presentacion->presentaciones->nombre }}</td>
                   <td style="padding: 10px;">{{ $presentacion->presentaciones->usuarios->nombre }}</td>
+                  <td style="padding: 10px;">{{ $presentacion->presentaciones->lugar }}</td>
                 @endif
 
               </tr>
@@ -97,6 +100,7 @@
 
                   <td style="padding: 10px; {{ $contadorPresentaciones % 2 == 0 ? 'background-color: #ff6b6b;' : 'background-color: #ee5253;' }}">{{ $presentacion->presentaciones->nombre }}</td>
                   <td style="padding: 10px; {{ $contadorPresentaciones % 2 == 0 ? 'background-color: #ff6b6b;' : 'background-color: #ee5253;' }}">{{ $presentacion->presentaciones->usuarios->nombre }}</td>
+                  <td style="padding: 10px; {{ $contadorPresentaciones % 2 == 0 ? 'background-color: #ff6b6b;' : 'background-color: #ee5253;' }}">{{ $presentacion->presentaciones->lugar }}</td>
                   @php
                     $contadorPresentaciones++;
                   @endphp
@@ -105,6 +109,7 @@
                   <td style="padding: 10px;">{{ $presentacion->fin }}</td>
                   <td style="padding: 10px;">{{ $presentacion->presentaciones->nombre }}</td>
                   <td style="padding: 10px;">{{ $presentacion->presentaciones->usuarios->nombre }}</td>
+                  <td style="padding: 10px;">{{ $presentacion->presentaciones->lugar }}</td>
                 @endif
               </tr>
             @endforeach

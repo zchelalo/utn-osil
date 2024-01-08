@@ -27,6 +27,14 @@
           </div>
 
           <div class="mb-3 col-md-6">
+            <label for="lugar" class="form-label">Lugar</label>
+            <input type="text" class="form-control" id="lugar" name="lugar" value="{{ old('lugar', $presentacion->lugar) }}">
+            @error('lugar')
+              <small class="fw-bold text-danger">{{ $message }}</small>
+            @enderror
+          </div>
+
+          <div class="mb-3 col-md-6">
             <label for="descripcion" class="form-label">Descripción</label>
             <textarea style="resize: none;" rows="3" class="form-control" id="descripcion" name="descripcion">{{ old('descripcion', $presentacion->descripcion) }}</textarea>
             @error('descripcion')

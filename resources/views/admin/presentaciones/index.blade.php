@@ -41,6 +41,7 @@
         <th scope="col">#</th>
         <th scope="col">Nombre</th>
         <th scope="col">Descripción</th>
+        <th scope="col">Lugar</th>
         <th scope="col">Imagen</th>
         <th scope="col">Presentación</th>
         <th scope="col">Número de vistas</th>
@@ -62,6 +63,9 @@
             </td>
             <td>
               {{ $presentacion->descripcion }}
+            </td>
+            <td>
+              {{ $presentacion->lugar }}
             </td>
             <td>
               @if(isset($presentacion->img))

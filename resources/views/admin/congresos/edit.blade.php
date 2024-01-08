@@ -62,6 +62,14 @@
             </div>
           </div>
 
+          <div class="mb-3 col-md-12">
+            <label for="max_ins_taller" class="form-label">Máximo de inscripciones para los talleres</label>
+            <input type="text" class="form-control" id="max_ins_taller" name="max_ins_taller" value="{{ old('max_ins_taller', $congreso->max_ins_taller) }}">
+            @error('max_ins_taller')
+              <small class="fw-bold text-danger">{{ $message }}</small>
+            @enderror
+          </div>
+
           @if(isset($congreso->img[0]))
             <div class="mb-3 mt-3 col-md-12">
               <div class="row" id="rowContenedorImgCongreso">

@@ -14,6 +14,7 @@ class congresos extends Model
         'descripcion',
         'img',
         'numero_vistas',
+        'max_ins_taller',
         'activo',
         'id_organizacion',
     ];

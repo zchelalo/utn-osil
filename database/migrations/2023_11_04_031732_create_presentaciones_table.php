@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('descripcion');
             $table->string('img', 255)->nullable();
             $table->json('presentacion')->nullable();
+            $table->string('lugar', 255);
             $table->integer('numero_vistas')->unsigned()->default(1);
             $table->integer('id_tipo_presentacion')->foreign('id_tipo_presentacion')->references('id')->on('tipo_presentaciones');
             $table->integer('id_congreso')->nullable()->foreign('id_congreso')->references('id')->on('congresos');
