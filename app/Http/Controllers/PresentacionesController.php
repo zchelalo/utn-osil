@@ -8,8 +8,11 @@ use App\Models\tipo_presentacion;
 use App\Models\fechas;
 use App\Models\congresos;
 use App\Models\usuarios;
+use App\Models\inscripcion_congresos;
+use App\Models\inscripcion_talleres;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class PresentacionesController extends Controller
 {
@@ -191,7 +194,56 @@ class PresentacionesController extends Controller
 
     public function inscripcion(presentaciones $presentacion)
     {
-        dd($presentacion);
+        $usuario = Auth::user();
+        $presentacion->congresos;
+        $presentacion->tipo_presentacion;
+
+        $inscripcion = inscripcion_talleres::where('id_congreso', $presentacion->congresos['id'])->where('id_presentacion', $presentacion['id'])->where('id_usuario', $usuario['id'])->first();
+        if (isset($inscripcion->id)){
+            session()->flash('status', 'Ya esta inscrito a este taller');
+            session()->flash('icon', 'info');
+
+            return back();
+        }
+
+        $inscripcion_taller = new inscripcion_talleres();
+
+        if ($presentacion->congresos === null){
+            $inscripcion_taller->id_presentacion = $presentacion['id'];
+            $inscripcion_taller->id_usuario = $usuario['id'];
+            $inscripcion_taller->save();
+
+            session()->flash('status', 'Inscripción completa');
+            session()->flash('icon', 'success');
+
+            return back();
+        }
+
+        $inscripcion_congreso = inscripcion_congresos::where('id_congreso', $presentacion->congresos['id'])->where('id_usuario', $usuario['id'])->first();
+        if (!isset($inscripcion_congreso->id)){
+            session()->flash('status', 'Antes de poder inscribirse a este taller tiene que inscribirse al congreso: '.$presentacion->congresos['nombre']);
+            session()->flash('icon', 'info');
+
+            return back();
+        }
+
+        $inscripciones_taller = inscripcion_talleres::where('id_congreso', $presentacion->congresos['id'])->where('id_usuario', $usuario['id'])->get();
+        if (count($inscripciones_taller) >= $presentacion->congresos['max_ins_taller']){
+            session()->flash('status', 'Ya se ha inscrito al máximo posible de talleres para el congreso: '.$presentacion->congresos['nombre']);
+            session()->flash('icon', 'info');
+
+            return back();
+        }
+
+        $inscripcion_taller->id_congreso = $presentacion->congresos['id'];
+        $inscripcion_taller->id_presentacion = $presentacion['id'];
+        $inscripcion_taller->id_usuario = $usuario['id'];
+        $inscripcion_taller->save();
+
+        session()->flash('status', 'Inscripción completa');
+        session()->flash('icon', 'success');
+
+        return back();
     }
 
     /**
